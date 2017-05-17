@@ -1,0 +1,14 @@
+<ion-view>
+  <ion-nav-title>
+    <div class="cabecalho_title">
+      Managing 2017
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <ion-slides slider="slider" ion-slides-tabs slide-tabs-scrollable="true">
+      <ion-slide-page ng-repeat="item in vm.slide" ion-slide-tab-label="{{ item.Nome }}">
+        <div ng-include=item.Template></div>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-view>

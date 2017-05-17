@@ -1,0 +1,110 @@
+<div ng-controller="VendasCtrl as vm">
+  <ion-header-bar>
+    <ion-nav-bar class="bar-light cabecalho_interno">
+      <ion-nav-buttons side="left">
+        <button class="button button-positive icon ion-android-refresh" ng-click="vm.Refresh()"> Atualizar</button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-positive icon ion-ios-calendar-outline"
+                ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
+                ng-change="vm.SetDataInicial()" style="margin-right: 10px !important;">&nbsp;&nbsp;&nbsp;Inicio
+        </button>
+        <button class="button button-positive icon ion-ios-calendar-outline"
+                ion-datetime-picker title="'Selecine a Data Final'" ng-model="vm.dataFinal"
+                ng-change="vm.SetDataFinal()" style="margin-right: 0px !important;">&nbsp;&nbsp;&nbsp;Fim
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+  </ion-header-bar>
+  <div class="bar bar-subheader cabecalho_interno">
+    <div style="width: 100%; text-align: center; margin-top: 7px;">
+      {{ vm.dataInicial | date: "dd/MM/yyyy" }} <span class="assertive">{{ vm.dataInicial | date: "HH:mm:ss" }}</span> à {{ vm.dataFinal | date: "dd/MM/yyyy"}} <span class="assertive">{{ vm.dataFinal | date: "HH:mm:ss"}}</span>
+    </div>
+  </div>
+
+  <ion-content class="has-header has-subheader has-footer">
+    <div class="padding">
+      <div class="card mb">
+          <ion-list>
+              <ion-item class="item item-divider">
+                  Tipo de Relatório
+              </ion-item>
+              <label class="item item-input item-select" style="width: 100%;">
+                  <div class="input-label">
+                    &nbsp;
+                  </div>
+                  <select ng-options="item.id as item.descricao for item in vm.tipos" ng-model="vm.tipo" ng-change="vm.GetVenda()">
+                  </select>
+              </label>
+          </ion-list>
+      </div>
+      <div class="card mt" ng-show="!vm.dados[0].length && !vm.rodape[0].length">
+        <ion-item class="item item-assertive">
+          Não foi encontrado resultado
+        </ion-item>
+      </div>
+      <div class="card" ng-hide="!vm.dados[0].length">
+        <ion-list>
+          <div ng-show="vm.tipo == 3">
+            <div ng-include="'templates/relatorios/venda-por-grupo-produto.html'"></div>
+          </div>
+          <div ng-show="vm.tipo == 4">
+            <div ng-include="'templates/relatorios/venda-por-vendedor.html'"></div>
+          </div>
+          <div ng-show="vm.tipo == 5">
+            <div ng-include="'templates/relatorios/venda-grafico-anual.html'"></div>
+          </div>
+        </ion-list>
+      </div>
+      <div class="card mt" ng-hide="!vm.detalhes[0].length">
+        <ion-list>
+          <ion-item class="item item-divider">
+            Total por Comanda
+          </ion-item>
+          <ion-item>
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" align="left">Mesa</td>
+                <td class="destaque-celula" align="center">Cartao</td>
+                <td class="destaque-celula" align="center">Balcão</td>
+                <td class="destaque-celula" align="right">Delivery</td>
+              </tr>
+              <tr>
+                <td align="right">{{ vm.detalhes[0][0].Mesa }}</td>
+                <td align="right">{{ vm.detalhes[0][0].Cartao }}</td>
+                <td align="right">{{ vm.detalhes[0][0].Balcao}}</td>
+                <td align="right">{{ vm.detalhes[0][0].Delivery }}</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="destaque-celula">Total Geral</td>
+                <td align="right">{{ vm.detalhes[0][0].Total }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class="card mt" ng-hide="!vm.rodape[0].length">
+        <ion-list>
+          <ion-item class="item item-divider">
+            Fechamento
+          </ion-item>
+          <ion-item class="assertive" ng-show="!vm.rodape[0].length">
+            Não houve vendas nesse período
+          </ion-item>
+          <ion-item ng-hide="!vm.rodape[0].length">
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" width="50%">Descrição</td>
+                <td class="destaque-celula" width="50%" align="right">Valor</td>
+              </tr>
+              <tr ng-repeat="item in vm.rodape[0]">
+                <td ng-class="{'destaque-celula':$last}">{{ item.TIPO }}</td>
+                <td ng-class="{'destaque-celula':$last}" align="right">{{ item.VALOR }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</div>

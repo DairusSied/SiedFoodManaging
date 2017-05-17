@@ -1,0 +1,25 @@
+<ion-item class="item item-divider">
+  Gráfico Anual de Vendas
+</ion-item>
+<div class="mt">
+  <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-colors="vm.colors" chart-series="vm.series" >
+  </canvas>
+</div>
+<ion-item>
+  <table class="tabela">
+    <tr>
+      <td class="destaque-celula" width="50%" align="left">Mês {{ $scope.ano }}</td>
+      <td class="destaque-celula" width="50%" align="right">Total</td>
+    </tr>
+    <tr ng-repeat="item in vm.dados[0]">
+      <td align="left">{{ item.Mes }}</td>
+      <td align="right">{{ item.Valor }}</td>
+    </tr>
+    <tr>
+      <td class="destaque-celula" width="50%" align="left">Total Geral</td>
+      <td class="destaque-celula" width="50%" align="right">{{ totalAno }}</td>
+    </tr>
+  </table>
+</ion-item>
+
+

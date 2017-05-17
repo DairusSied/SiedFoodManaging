@@ -1,0 +1,50 @@
+<div ng-controller="EstoqueCtrl as vm">
+  <ion-header-bar class="bar bar-header cabecalho_interno">
+    <ion-nav-bar class="bar-light cabecalho_interno">
+      <ion-nav-buttons side="left">
+        <button class="button button-positive icon ion-android-refresh"
+                ng-click="vm.GerarRelatorio()">Atualizar</button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-positive icon ion-funnel" ng-click="vm.SetGrupo()" style="margin-right: 10px !important;">
+          Grupo
+        </button>
+        <button class="button button-positive icon ion-clipboard" ng-click="vm.SetTipo()" style="margin-right: 0px !important;" >
+          Tipo de Relatório
+        </button>
+      </ion-nav-buttons>
+  </ion-header-bar>
+  <ion-content class="has-header has-footer">
+    <div class="padding" ng-show="!vm.dados[0].length">
+      <div class="card">
+        <ion-list>
+          <ion-item class="item item-assertive">
+            Nenhum registro encontrado
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <div class="padding" ng-hide="!vm.dados[0].length">
+      <div class="card">
+        <ion-list>
+          <div class="item item-divider">
+            <i class="icon ion-ios-briefcase"></i>
+            Relatório de Estoque
+          </div>
+          <ion-item>
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" width="70%">Produto</td>
+                <td class="destaque-celula" width="30%" align="right">Qtde</td>
+              </tr>
+              <tr ng-repeat="item in vm.dados[0]">
+                <td>{{ item.Produto | limitTo: 25 }}</td>
+                <td align="right">{{ item.Estoque }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</div>

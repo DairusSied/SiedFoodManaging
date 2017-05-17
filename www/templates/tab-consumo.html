@@ -1,0 +1,46 @@
+<div ng-controller="ConsumoCtrl as vm">
+  <ion-header-bar>
+    <ion-nav-bar class="bar-light cabecalho_interno">
+
+      <ion-nav-buttons side="left">
+        <button class="button button-positive icon ion-android-refresh" ng-click="vm.GerarRelatorio()"> Atualizar</button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+  </ion-header-bar>
+  <ion-content class="has-header has-footer">
+    <div class="padding" ng-show="!vm.caixa[0].length && !vm.dados[0].length && !vm.rodape[0].length">
+      <div class="card">
+        <ion-list>
+          <ion-item class="item item-assertive">Nenhum registro encontrado</ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-50" ng-hide="!vm.caixa[0].length">
+        <div class="card">
+          <ion-list>
+            <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
+              Valores em Caixa
+            </ion-item>
+            <ion-item class="consumo_item" ng-repeat="item in vm.caixa[0]" ng-class="{'item-divider' : $last }">
+              <p class="titulo">{{ item.TIPO }}</p>
+              <p class="consumo_valor" ng-class="{'consumo_total' : $last }">{{ item.VALOR}}</p>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+      <div class="col col-50" ng-hide="!vm.consumo[0].length">
+        <div class="card">
+          <ion-list>
+            <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
+              Vendas em Consumo
+            </ion-item>
+            <ion-item class="consumo_item" ng-repeat="item in vm.consumo[0]" ng-class="{'item-divider' : $last }">
+              <p class="titulo">{{ item.TIPO }}</p>
+              <p class="consumo_valor" ng-class="{'consumo_total' : $last }">{{ item.VALOR}}</p>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+</div>

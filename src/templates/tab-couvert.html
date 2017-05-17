@@ -1,0 +1,95 @@
+<div ng-controller="CouvertCtrl as vm">
+  <ion-header-bar>
+    <ion-nav-bar class="bar-light cabecalho_interno">
+      <ion-nav-buttons side="left">
+        <button class="button button-positive icon ion-android-refresh" ng-click="vm.GerarCouvert()"> Atualizar</button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-positive icon ion-ios-calendar-outline"
+                ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
+                ng-change="vm.GerarCouvert()" style="margin-right: 10px !important;">&nbsp;&nbsp;&nbsp;Inicio
+        </button>
+        <button class="button button-positive icon ion-ios-calendar-outline"
+                ion-datetime-picker title="'Selecine a Data Final'" ng-model="vm.dataFinal"
+                ng-change="vm.GerarCouvert()" style="margin-right: 0px !important;">&nbsp;&nbsp;&nbsp;Fim
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+  </ion-header-bar>
+  <ion-content class="has-footer">
+    <div class="padding">
+      <div class="card" ng-show="vm.fechados[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Counvert Fechados
+          </div>
+          <ion-item>
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" width="15%">Tipo</td>
+                <td class="destaque-celula" width="20%">Comanda</td>
+                <td class="destaque-celula" width="20%">Data/Hora</td>
+                <!--<td class="destaque-celula" width="15%" align="center">Qtde</td>-->
+                <td class="destaque-celula" width="30%" align="right">Total</td>
+              </tr>
+              <tr ng-repeat="item in vm.fechados[0]">
+                <td>{{ item.Tipo }}</td>
+                <td align="center">{{ item.Comanda }}</td>
+                <td align="right">{{ item.DataHora | limitTo:12 }}</td>
+                <!--<td align="center">{{ item.Qtde }}</td>-->
+                <td align="right">{{ item.Total }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="card mt" ng-show="vm.consumos[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Couverts em Consumação
+          </div>
+          <ion-item>
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" width="15%">Tipo</td>
+                <td class="destaque-celula" width="20%">Comanda</td>
+                <td class="destaque-celula" width="20%">Data/Hora</td>
+                <td class="destaque-celula" width="15%" align="center">Qtde</td>
+                <td class="destaque-celula" width="30%" align="right">Total</td>
+              </tr>
+              <tr ng-repeat="item in vm.consumos[0]">
+                <td>{{ item.Tipo }}</td>
+                <td align="center">{{ item.Comanda }}</td>
+                <td align="right">{{ item.DataHora | limitTo:12 }}</td>
+                <td align="center">{{ item.Qtde }}</td>
+                <td align="right">{{ item.Total }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class="card mt" ng-show="vm.consumos[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Total Geral
+          </div>
+          <ion-item>
+            <table class="tabela">
+              <tr>
+                <td class="destaque-celula" width="20%">Fechados</td>
+                <td class="destaque-celula" width="40%" align="right">Consumos</td>
+                <td class="destaque-celula" width="40%" align="right">Geral</td>
+              </tr>
+              <tr>
+                <td align="right">{{ vm.totalFechados }}</td>
+                <td align="right">{{ vm.totalConsumos }}</td>
+                <td align="right">{{ vm.totalGeral }}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</div>

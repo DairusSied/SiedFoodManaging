@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-nav-title>
+    <div class="cabecalho_title">
+      Managing 2017
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <div ng-hide="vm.login">
+      <div class="padding">
+        <div class="card mb">
+          <ion-list>
+            <ion-item class="item item-assertive">
+              O usuário não está logado no sistema
+            </ion-item>
+          </ion-list>
+        </div>
+        <button class="button button-balanced button-block" ng-click="vm.preLogin()">Autenticar Usuário</button>
+      </div>
+    </div>
+    <ion-slides slider="slider" ion-slides-tabs slide-tabs-scrollable="true" ng-show="vm.login">
+      <ion-slide-page ng-repeat="item in vm.slide" ion-slide-tab-label="{{ item.Nome }}">
+        <div ng-include=item.Template></div>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-view>

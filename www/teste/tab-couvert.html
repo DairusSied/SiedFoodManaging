@@ -1,0 +1,67 @@
+<div ng-controller="CouvertCtrl as vm">
+  <ion-content class="has-footer">
+    <div class="padding">
+      <div class="card">
+        <ion-list>
+          <ion-item class="item item-divider">
+            Selecionar Períodos
+          </ion-item>
+          <div class="item item-icon-left" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial">
+            <i class="icon ion-ios-calendar-outline positive"></i> Data Inicial:
+            {{ vm.dataInicial| date: "dd/MM/yyyy HH:mm:ss"}}
+          </div>
+          <div class="item item-icon-left" ion-datetime-picker title="'Selecine a Data Final'" ng-model="vm.dataFinal">
+            <i class="icon ion-ios-calendar-outline positive"></i> Data Final:
+            {{ vm.dataFinal| date: "dd/MM/yyyy HH:mm:ss"}}
+          </div>
+        </ion-list>
+      </div>
+      <button class="button button-balanced button-block icon ion-ios-calculator-outline" ng-click="vm.GerarCouvert()">
+        Calcular Couvert
+      </button>
+
+      <div class="card" ng-show="vm.fechados[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Counvert Fechados
+          </div>
+          <ion-item ng-repeat="item in vm.fechados[0]">
+            <strong>Tipo: </strong>{{ item.Tipo }} <br>
+            <strong>Comanda: </strong>{{ item.Comanda }} <br>
+            <strong>DataHora: </strong>{{ item.DataHora }} <br>
+            <strong>Qtde: </strong>{{ item.Qtde }} <br>
+            <strong>Total: </strong>{{ item.Total }} <br>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="car mt" ng-show="vm.consumos[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Couverts em Consumação
+          </div>
+          <ion-item ng-repeat="item in vm.consumos[0]">
+            <strong>Tipo: </strong>{{ item.Tipo }} <br>
+            <strong>Comanda: </strong>{{ item.Comanda }} <br>
+            <strong>DataHora: </strong>{{ item.DataHora }} <br>
+            <strong>Qtde: </strong>{{ item.Qtde }} <br>
+            <strong>Total: </strong>{{ item.Total }} <br>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="car mt" ng-show="vm.consumos[0].length">
+        <ion-list>
+          <div class="item item-divider">
+            Total Geral
+          </div>
+          <ion-item>
+            <strong>Total Fechado: </strong>{{ vm.totalFechados }} <br>
+            <strong>Total em Consumo: </strong>{{ vm.totalConsumos }} <br>
+            <strong>Total Geral: </strong>{{ vm.totalGeral }} <br>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</div>

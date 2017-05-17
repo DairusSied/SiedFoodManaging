@@ -1,0 +1,21 @@
+<ion-item class="item item-divider">
+  Vendas por Vendedor
+</ion-item>
+<div class="mt">
+  <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-colors="vm.colors" chart-series="vm.series" >
+  </canvas>
+</div>
+<ion-item>
+  <table class="tabela">
+    <tr>
+      <td class="destaque-celula" width="50%">Vendedor</td>
+      <td class="destaque-celula" width="10%" align="left">Comissão</td>
+      <td class="destaque-celula" width="40%" align="right">Venda</td>
+    </tr>
+    <tr ng-repeat="item in vm.dados[0]">
+      <td>{{ item.Vendedor }}</td>
+      <td align="left">{{ item.Comissao }}</td>
+      <td align="right">{{ item.Venda }}</td>
+    </tr>
+  </table>
+</ion-item>

@@ -1,0 +1,17 @@
+<ion-item class="item item-divider">
+  Vendas por Grupos de Produtos
+</ion-item>
+<ion-item>
+  <table class="tabela">
+    <tr>
+      <td class="destaque-celula" width="50%">Grupo</td>
+      <td class="destaque-celula" width="10%" align="left">Qtde</td>
+      <td class="destaque-celula" width="40%" align="right">Total</td>
+    </tr>
+    <tr ng-repeat="item in vm.dados[0]">
+      <td ng-class="{'destaque-celula':$last}">{{ item.Grupo }}</td>
+      <td ng-class="{'destaque-celula':$last}" align="left">{{ item.Qtde }}</td>
+      <td ng-class="{'destaque-celula':$last}" align="right">{{ item.Total }}</td>
+    </tr>
+  </table>
+</ion-item>

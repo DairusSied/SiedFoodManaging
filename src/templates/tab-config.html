@@ -1,0 +1,48 @@
+<div ng-controller="ConfigCtrl as vm">
+    <ion-header-bar class="bar bar-header cabecalho_interno">
+        <button class="button button-positive" ng-click="vm.novo()">Novo</button>
+        <div style="width: 100%; text-align: center; margin-top: 7px;">
+            Configurações do Servidor
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header" scroll="false">
+        <div class="padding" ng-hide="vm.servidores.length > 0">
+            <div class="mb">
+                <ion-list>
+                    <ion-item class="item item-assertive">
+                        Não existe servidor cadastrado
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div class="padding" ng-show="vm.servidores.length > 0" style="margin-bottom: 0px; padding-bottom: 0px;">
+            <div class="card mb" ng-show='vm.mensagem.length > 0'>
+                <ion-list>
+                    <ion-item class="item item-assertive">
+                        {{ vm.mensagem[0] }}
+                    </ion-item>
+                </ion-list>
+            </div>
+            <div class="card">
+                <ion-list>
+                    <ion-item class="item item-divider">
+                        Servidor(es) Cadastrado(s)
+                    </ion-item>
+                    <ion-radio ng-repeat="item in vm.servidores" ng-model="vm.Ip" ng-value="'{{ item.Ip }}'"
+                               ng-change="vm.LimparMensagem()">
+                        {{ item.Ip }}
+                    </ion-radio>
+                </ion-list>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0px; padding-top: 0px;" ng-show="vm.servidores.length > 0">
+            <div class="col col-50" style="margin-top: 0px; padding-top: 0px;">
+                <button class="button button-block button-balanced" ng-click="vm.selecionar()">Selecionar IP</button>
+            </div>
+            <div class="col col-50" style="margin-top: 0px; padding-top: 0px;">
+                <button class="button button-block button-assertive" ng-click="vm.PopUpConfirmarExclusao()">Excluir IP
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</div>
