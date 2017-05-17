@@ -10,6 +10,7 @@
         '$ionicPopup',
         '$ionicLoading',
         '$timeout',
+        '$ionicScrollDelegate',
         'ClientAPIFactory',
         'TratarDataService',
         'TratarObjetosService',
@@ -22,6 +23,7 @@
                        $ionicPopup,
                        $ionicLoading,
                        $timeout,
+                       $ionicScrollDelegate,
                        ClientAPIFactory,
                        TratarDataService,
                        TratarObjetosService,
@@ -75,7 +77,8 @@
                     vm.dados = d;
 
                     $timeout(function () {
-                        $ionicLoading.hide()
+                        $ionicLoading.hide();
+                        $ionicScrollDelegate.scrollTop();
                     }, 1000);
                 });
 

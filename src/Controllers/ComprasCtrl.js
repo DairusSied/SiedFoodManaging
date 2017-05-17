@@ -4,9 +4,9 @@
     angular.module('sied.controllers')
         .controller('ComprasCtrl', ComprasCtrl);
 
-    ComprasCtrl.$inject = ['$q', '$timeout', '$scope', '$ionicLoading', 'ClientAPIFactory'];
+    ComprasCtrl.$inject = ['$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory'];
 
-    function ComprasCtrl($q, $timeout, $scope, $ionicLoading, ClientAPIFactory) {
+    function ComprasCtrl($q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory) {
         var vm = this;
 
         vm.titulo = 'Compras';
@@ -40,6 +40,8 @@
 
                     $timeout(function () {
                         $ionicLoading.hide();
+
+                        $ionicScrollDelegate.scrollTop();
                     }, 1000);
                 });
         }
@@ -80,7 +82,10 @@
             vm.relatorio = false;
             $q.when(vm.relatorio)
                 .then(GetRetornaCompraCabecalhoItem(item))
-                .then(GetRetornaCompraItem(item));
+                .then(GetRetornaCompraItem(item))
+                .then(function(){
+                    $ionicScrollDelegate.scrollTop();
+                });
         }
 
         function Voltar() {

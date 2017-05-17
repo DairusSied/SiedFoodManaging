@@ -2,9 +2,9 @@
     'use strict';
     angular.module('sied.controllers').controller('VendasCtrl', VendasCtrl);
 
-    VendasCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicPopup', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
+    VendasCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
 
-    function VendasCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicPopup, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
+    function VendasCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
 
         var vm = this;
 
@@ -71,6 +71,8 @@
             vm.rodape = [];
 
             GetVenda();
+
+            $ionicScrollDelegate.scrollTop();
         }
 
         function SetDataInicial() {
@@ -196,6 +198,8 @@
 
                                 $timeout(function () {
                                     $ionicLoading.hide();
+                                    
+                                    $ionicScrollDelegate.scrollTop();
                                 }, 1000);
                             });
                     }
@@ -212,6 +216,8 @@
                     return data;
                 })
                 .then(function () {
+                    $ionicScrollDelegate.scrollTop();
+
                     vm.relatorio = true;
                 });
         }
@@ -236,6 +242,7 @@
                     }
                     $timeout(function () {
                         $ionicLoading.hide();
+                        $ionicScrollDelegate.scrollTop();
                     }, 1000);
                 });
         }

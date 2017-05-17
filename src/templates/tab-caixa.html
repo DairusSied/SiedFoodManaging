@@ -61,19 +61,19 @@
           <div class="item item-divider">
             Movimento do Turno
           </div>
-          <ion-item>
+          <ion-item class="item-padding">
             <table class="tabela">
               <tr>
                 <td class="destaque-celula" width="10%">Dia</td>
-                <td class="destaque-celula" width="20%" align="center">Venda</td>
+                <td class="destaque-celula" width="15%" align="center">Venda</td>
                 <td class="destaque-celula" width="40%">Descricao</td>
-                <td class="destaque-celula" width="20%" align="right">Valor</td>
+                <td class="destaque-celula" width="25%" align="right">Valor</td>
                 <td class="destaque-celula" width="10%" align="center">Tipo</td>
               </tr>
               <tr ng-repeat="item in vm.movimento[0]">
                 <td>{{ item.DATA | limitTo:2 }}</td>
                 <td align="center">{{ item.VENDA }}</td>
-                <td>{{ item.DESCRICAO | limitTo:12 }}</td>
+                <td>{{ item.DESCRICAO | limitTo:10 }}</td>
                 <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="right">{{ item.VALOR }}</td>
                 <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="center">{{ item.TIPO }}</td>
               </tr>
@@ -87,7 +87,7 @@
           <div class="item item-divider">
             Resumo das Vendas
           </div>
-          <ion-item type="item-text-wrap">
+          <ion-item class="item-padding" type="item-text-wrap">
             <table class="tabela">
               <tr>
                 <td class="destaque-celula" width="50%" align="left">Tipo</td>
@@ -107,7 +107,7 @@
           <div class="item item-divider">
             Resumo do Movimento
           </div>
-          <ion-item type="item-text-wrap">
+          <ion-item class="item-padding" type="item-text-wrap">
             <table class="tabela">
               <tr>
                 <td class="destaque-celula" width="40%" align="left">Tipo</td>
@@ -129,7 +129,7 @@
           <div class="item item-divider">
             Balancete do Caixa
           </div>
-          <ion-item type="item-text-wrap">
+          <ion-item class="item-padding" type="item-text-wrap">
             <table class="tabela">
               <tr>
                 <td class="destaque-celula" colspan="2" width="50%" align="center">Entrada</td>
@@ -151,7 +151,7 @@
           <div class="item item-divider">
             Relatório de Cancelamentos
           </div>
-          <ion-item type="item-text-wrap">
+          <ion-item class="item-padding" type="item-text-wrap">
             <table class="tabela">
               <tr>
                 <td class="destaque-celula" width="50%" colspan="2" align="center">Cancelamentos do Turno</td>

@@ -3,9 +3,9 @@
 
     angular.module('sied.controllers').controller('CancelamentosCtrl', CancelamentosCtrl);
 
-    CancelamentosCtrl.$inject = ['$q', '$log', '$timeout', '$scope', '$ionicLoading', '$ionicPopup', 'ClientAPIFactory', 'UsuarioFactory'];
+    CancelamentosCtrl.$inject = ['$q', '$log', '$timeout', '$scope', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'UsuarioFactory'];
 
-    function CancelamentosCtrl($q, $log, $timeout, $scope, $ionicLoading, $ionicPopup, ClientAPIFactory, UsuarioFactory) {
+    function CancelamentosCtrl($q, $log, $timeout, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, UsuarioFactory) {
         var vm = this;
 
         vm.titulo = 'Cancelamento de itens';
@@ -63,6 +63,9 @@
                 })
                 .then(function () {
                     RetornaCartoesEmMovimento();
+                })
+                .then(function(){
+                    $ionicScrollDelegate.scrollTop();
                 });
         }
 
@@ -109,6 +112,8 @@
 
                 $timeout(function () {
                     $ionicLoading.hide();
+
+                    $ionicScrollDelegate.scrollTop();
                 }, 1000);
             });
         }

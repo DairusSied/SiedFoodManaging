@@ -3,9 +3,9 @@
     angular.module('sied.controllers')
         .controller('CouvertCtrl', CouvertCtrl);
 
-    CouvertCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
+    CouvertCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
 
-    function CouvertCtrl($log, $q, $timeout, $scope, $ionicLoading, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
+    function CouvertCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
         var vm = this;
 
         vm.dataInicial = '';
@@ -36,6 +36,9 @@
             $q.when(vm.dataFinal)
                 .then(GetRetornaCouvertFechado())
                 .then(GetRetornaCouvertMovimento())
+                .then(function(){
+                    $ionicScrollDelegate.scrollTop();
+                })
             ;
         }
 

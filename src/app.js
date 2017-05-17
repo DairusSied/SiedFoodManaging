@@ -3,7 +3,7 @@
 
     runApp.$inject = ['$ionicPlatform', '$ionicPickerI18n'];
 
-    configApp.$inject = ['$stateProvider', '$urlRouterProvider', 'ChartJsProvider'];
+    configApp.$inject = ['$stateProvider', '$urlRouterProvider', 'ChartJsProvider', '$ionicConfigProvider'];
 
     function runApp($ionicPlatform, $ionicPickerI18n) {
         $ionicPlatform.ready(function () {
@@ -24,7 +24,7 @@
         });
     }
 
-    function configApp($stateProvider, $urlRouterProvider, ChartJsProvider) {
+    function configApp($stateProvider, $urlRouterProvider, ChartJsProvider, $ionicConfigProvider) {
         $stateProvider.state('index', {
             url: '/inicio',
             templateUrl: 'templates/tab-index.html',
@@ -34,6 +34,8 @@
         ChartJsProvider.setOptions({colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']});
 
         $urlRouterProvider.otherwise("/inicio");
+
+        $ionicConfigProvider.backButton.text('');
     }
 
     angular.module('sied.controllers', []);

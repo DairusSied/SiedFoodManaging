@@ -3,9 +3,9 @@
 
     angular.module('sied.controllers').controller('EstoqueCtrl', EstoqueCtrl);
 
-    EstoqueCtrl.$inject = ['$q', '$timeout', '$ionicLoading', '$scope', '$ionicPopup', 'ClientAPIFactory', 'TratarObjetosService'];
+    EstoqueCtrl.$inject = ['$q', '$timeout', '$ionicLoading', '$scope', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarObjetosService'];
 
-    function EstoqueCtrl($q, $timeout, $ionicLoading, $scope, $ionicPopup, ClientAPIFactory, TratarObjetosService) {
+    function EstoqueCtrl($q, $timeout, $ionicLoading, $scope, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarObjetosService) {
         var vm = this;
 
         vm.titulo = 'Controle de Estoque';
@@ -111,6 +111,8 @@
                         }
                         $timeout(function(){
                             $ionicLoading.hide();
+
+                            $ionicScrollDelegate.scrollTop();
                         }, 1000);
                     });
 

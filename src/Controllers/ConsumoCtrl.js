@@ -3,9 +3,9 @@
 
     angular.module('sied.controllers').controller('ConsumoCtrl', ConsumoCtrl);
 
-    ConsumoCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService'];
+    ConsumoCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService'];
 
-    function ConsumoCtrl($log, $q, $timeout, $scope, $ionicLoading, ClientAPIFactory, TratarDataService, TratarObjetosService) {
+    function ConsumoCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService) {
         var vm = this;
 
         vm.titulo = 'Vendas em Consumo';
@@ -64,6 +64,7 @@
                 .then(GetVendaEmConsumoCaixa())
                 .then(GetVendaEmConsumo())
             ;
+            $ionicScrollDelegate.scrollTop();
         }        
     }
 })();

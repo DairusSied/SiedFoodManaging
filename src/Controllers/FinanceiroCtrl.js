@@ -3,9 +3,9 @@
 
     angular.module('sied.controllers').controller('FinanceiroCtrl', FinanceiroCtrl);
 
-    FinanceiroCtrl.$inject = ['$q', '$timeout', '$log', '$scope', '$ionicLoading', '$ionicPopup', '$cordovaClipboard', 'ClientAPIFactory', 'TratarDataService'];
+    FinanceiroCtrl.$inject = ['$q', '$timeout', '$log', '$scope', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', '$cordovaClipboard', 'ClientAPIFactory', 'TratarDataService'];
 
-    function FinanceiroCtrl($q, $timeout, $log, $scope, $ionicLoading, $ionicPopup, $cordovaClipboard, ClientAPIFactory, TratarDataService) {
+    function FinanceiroCtrl($q, $timeout, $log, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, $cordovaClipboard, ClientAPIFactory, TratarDataService) {
         var vm = this;
 
         vm.titulo = 'Financeiro';
@@ -98,6 +98,8 @@
                 .then(function () {
                     $timeout(function () {
                         $ionicLoading.hide();
+
+                        $ionicScrollDelegate.scrollTop();
                     }, 1000);
                 })
             ;
