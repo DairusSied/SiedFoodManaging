@@ -27,7 +27,7 @@
     function configApp($stateProvider, $urlRouterProvider, ChartJsProvider, $ionicConfigProvider) {
         $stateProvider.state('index', {
             url: '/inicio',
-            templateUrl: 'templates/tab-index.html',
+            templateUrl: '../templates/tab-index.html',
             controller: 'InicioCtrl'
         });
 
@@ -48,9 +48,6 @@
         [
             'ionic', 'ionic-modal-select', 'ion-datetime-picker', 'ngCordova', 'chart.js', 'sied.controllers', 'sied.services', 'sied.factories'
         ])
-
         .run(runApp)
-
         .config(configApp);
-
 })();

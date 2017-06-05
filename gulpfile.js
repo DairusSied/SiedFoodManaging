@@ -10,13 +10,13 @@ var uglify = require('gulp-uglify');
 
 var paths = {
     root: ['./www/'],
-    app: ['./src/app.js'],
-    index: ['./src/index.html'],
-    controllers: ['./src/controllers/*.js'],
-    services: ['./src/services/*.js'],
-    factories: ['./src/factories/*.js'],
-    css: ['./src/css/*'],
-    tpl: ['./src/templates/*'],
+    app: ['./app/js/app.js'],
+    index: ['./app/index.html'],
+    controllers: ['./app/js/controllers/*.js'],
+    services: ['./app/js/services/*.js'],
+    factories: ['./app/js/factories/*.js'],
+    css: ['./app/css/*'],
+    tpl: ['./app/templates/*'],
     dist: './www/js/dist/',
     sass: ['./scss/**/*.scss']
 };

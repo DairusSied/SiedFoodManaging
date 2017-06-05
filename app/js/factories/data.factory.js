@@ -14,6 +14,8 @@
             _db = new PouchDB('sied_dev', {adapter: 'websql'});
         }
 
+        initDB();
+
         function addServidor(dados) {
             return $q.when(_db.put(dados)).then(function (response) {
                 return response;
