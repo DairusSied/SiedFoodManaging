@@ -28,7 +28,7 @@
         $stateProvider.state('index', {
             url: '/inicio',
             templateUrl: '../templates/tab-index.html',
-            controller: 'InicioCtrl'
+            controller: 'PrincipalCtrl'
         });
 
         ChartJsProvider.setOptions({colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']});

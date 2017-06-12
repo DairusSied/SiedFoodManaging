@@ -16,7 +16,7 @@ var paths = {
     services: ['./app/js/services/*.js'],
     factories: ['./app/js/factories/*.js'],
     css: ['./app/css/*'],
-    tpl: ['./app/templates/*'],
+    tpl: ['./app/templates/**/*'],
     dist: './www/js/dist/',
     sass: ['./scss/**/*.scss']
 };
@@ -37,7 +37,7 @@ gulp.task('index', function (done) {
 gulp.task('factories', function (done) {
     gulp.src(paths.factories)
         .pipe(concat('factories.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(paths.dist))
         .on('end', done);
 });
