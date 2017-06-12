@@ -8,6 +8,7 @@
     '$scope',
     '$q',
     '$ionicPopup',
+    '$rootScope',
     'ServidorFactory',
     'MenuFactory',
     'HostFactory',
@@ -17,7 +18,7 @@
     '$log'
   ];
 
-  function PrincipalCtrl($scope, $q, $ionicPopup, ServidorFactory, MenuFactory, HostFactory, ClientAPIFactory, UsuarioFactory, TratarObjetosService, $log) {
+  function PrincipalCtrl($scope, $q, $ionicPopup, $rootScope, ServidorFactory, MenuFactory, HostFactory, ClientAPIFactory, UsuarioFactory, TratarObjetosService, $log) {
     var vm = this;
 
     vm.hide = false;
@@ -54,26 +55,27 @@
       vm.menu = [];
       vm.slide = [];
 
-      configurarServidor().then(function (response) {
-        if (!response) {
+      configurarServidor()
+        .then(function (response) {
+          if (!response) {
+            montarMenu(0).then(function (response) {
+              vm.menu = response.menu;
+              vm.slide = response.slide;
+            });
+            return;
+          }
+          vm.host = response[0];
+
+          HostFactory.setConfig(vm.host.servidor);
+
+          preLogin();
+        })
+        .catch(function (error) {
           montarMenu(0).then(function (response) {
             vm.menu = response.menu;
             vm.slide = response.slide;
           });
-          return;
-        }
-        vm.host = response[0];
-
-        HostFactory.setConfig(vm.host.servidor);
-
-        preLogin();
-      }).catch(function (error) {
-        montarMenu(0).then(function (response) {
-          vm.menu = response.menu;
-          vm.slide = response.slide;
         });
-        $log.error(error);
-      });
     }
 
     $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
@@ -195,7 +197,7 @@
             text: 'Sair',
             type: 'button-assertive',
             onTap: function (e) {
-              montarMenu(0).then(function(response){
+              montarMenu(0).then(function (response) {
                 vm.menu = response.menu;
                 vm.slide = response.slide;
 
@@ -292,7 +294,17 @@
 
           var count = TratarObjetosService.ContarObjetos(vm.usuarios[0]);
 
+          ClientAPIFactory.async('GetRetornaCnpjDaEmpresa')
+            .then(function (response) {
+              $rootScope.cnpj = response[0];
+            });
           vm.popup = PopUpPrelogin(count);
+        })
+        .catch(function (error) {
+          montarMenu(0).then(function (response) {
+            vm.menu = response.menu;
+            vm.slide = response.slide;
+          });
         });
     }
 

@@ -13,6 +13,7 @@
     "ionic": "ionic serve"
   },
   "devDependencies": {
+    "@ionic/cli-plugin-cordova": "1.3.0",
     "@ionic/cli-plugin-ionic1": "1.1.2",
     "angular": "^1.5.3",
     "angular-mock": "^1.0.0",

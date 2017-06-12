@@ -198,7 +198,7 @@
 
                                 $timeout(function () {
                                     $ionicLoading.hide();
-                                    
+
                                     $ionicScrollDelegate.scrollTop();
                                 }, 1000);
                             });

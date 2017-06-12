@@ -4,9 +4,16 @@
   angular.module('sied.controllers')
     .controller('InicioCtrl', InicioCtrl);
 
-  InicioCtrl.$inject = ['$ionicPlatform', 'ClientAPIFactory', '$ionicPopup', '$ionicSideMenuDelegate']
+  InicioCtrl.$inject = [
+    '$ionicPlatform',
+    'ClientAPIFactory',
+    '$ionicPopup',
+    '$ionicSideMenuDelegate',
+    '$rootScope',
+    '$log'
+  ];
 
-  function InicioCtrl($ionicPlatform, ClientAPIFactory, $ionicPopup, $ionicSideMenuDelegate) {
+  function InicioCtrl($ionicPlatform, ClientAPIFactory, $ionicPopup, $ionicSideMenuDelegate, $rootScope, $log) {
     var vm = this;
 
     vm.ConfirmarSaida = ConfirmarSaida;
@@ -23,12 +30,8 @@
       $ionicSideMenuDelegate.toggleLeft();
     }
 
-    function init()
-    {
-      ClientAPIFactory.async('GetRetornaCnpjDaEmpresa')
-        .then(function(response){
-          vm.cnpj = response[0];
-        });
+    function init() {
+      vm.cnpj = $rootScope.cnpj;
     }
 
     function ConfirmarSaida() {

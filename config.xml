@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.siedsistemas.siedfoodmanaging2017" version="0.0.1" versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.siedsistemas.siedfoodmanaging2017" version="0.0.3" versionCode="3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>SiedFoodManaging</name>
   <description> Relatórios do SiedFoodManaging </description>
   <author email="allanroberto18@gmail.com" href="https://www.linkedin.com/in/allanroberto18/"> Allan Roberto
