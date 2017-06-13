@@ -1,0 +1,39 @@
+{
+  "name": "ion-slides-tabs",
+  "description": "Ionic sliding tabs directive",
+  "main": [
+    "src/js/slidingTabsDirective.js",
+    "src/css/slidingTabs.css"
+  ],
+  "keywords": [
+    "ionic",
+    "slides tabs",
+    "sliding tabs"
+  ],
+  "authors": [
+    "Jakob Knorr",
+    "Leonardo Ruhland"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "ionic": "~1.3.1"
+  },
+  "homepage": "https://github.com/leoruhland/ion-slides-tabs",
+  "_release": "053b28346e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "053b28346ef7050e991cb10752020a2eb7a7d5be"
+  },
+  "_source": "https://github.com/leoruhland/ion-slides-tabs.git",
+  "_target": "*",
+  "_originalSource": "ion-slides-tabs",
+  "_direct": true
+}

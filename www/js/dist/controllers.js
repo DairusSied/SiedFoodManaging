@@ -1,1 +1,1998 @@
-!function(){"use strict";function o(o,e,t,n,a,i,r,s,c,u){function l(){P.dias=1,d()}function d(){n.show(),P.caixa=[],P.movimento=[],P.resumoMovimento=[],P.resumoVendas=[],P.balancete=[],P.cancelamentos=[],P.totalCancelamentos="",P.listagem=!0,r.async("GetTurno/"+P.dias).then(function(o){n.show({template:"Carregando Turnos"}),P.dados=o,a(function(){n.hide(),i.scrollTop()},1e3)})}function m(){a(function(){n.hide()},1e3)}function p(){n.show(),P.movimento=[],r.async("GetMovimentoDoTurno/"+P.caixa.ID_CAIXA+"/"+P.caixa.TURNO).then(function(o){n.show({template:"Carregando Movimentos do Turno"}),P.movimento=o,m()})}function f(){n.show(),P.resumoMovimento=[],r.async("GetResumoDoMovimentoDoTurno/"+P.caixa.ID_CAIXA+"/"+P.caixa.TURNO).then(function(o){n.show({template:"Carregando Resumo dos Movimentos do Turno"}),P.resumoMovimento=o,m()})}function h(){n.show(),P.resumoVendas=[],r.async("GetResumoDaVendaDoTurno/"+P.caixa.ID_CAIXA+"/"+P.caixa.TURNO).then(function(o){n.show({template:"Carregando Resumo das Vendas do Turno"}),P.resumoVendas=o,m()})}function g(){n.show(),P.balancete=[],r.async("GetBalanceteDoTurno/"+P.caixa.ID_CAIXA+"/"+P.caixa.TURNO).then(function(o){n.show({template:"Carregando Balancete do Turno"}),P.balancete=o,m()})}function v(){n.show(),P.cancelamentos=[],r.async("GetCancelamentoNoTurno/"+P.caixa.ID_CAIXA+"/"+P.caixa.TURNO).then(function(o){if(n.show({template:"Carregando Cancelamentos do Turno"}),c.ContarObjetos(o[0])>0){var e=I(o);P.cancelamentos=o,P.totalCancelamentos=u.ConverterParaString(e.toFixed(2))}m()})}function C(e){P.listagem=!1,P.caixa=e,P.datahora=s.RetornarDataHora(),o.when(P.caixa).then(p()).then(f()).then(h()).then(g()).then(v())}function b(){P.dias=P.data.dias,d()}function S(){P.data={},P.data.dias=1;w()}function $(){var o='<label class="item item-input">';return o+='<span class="input-label">Dias: </span>',o+='<input type="text" ng-model="vm.data.dias" readonly>',o+="</label>",o+='<div class="item range range-positive">',o+='<i class="icon ion-ios-minus"></i>',o+='<input type="range" min="1" max="31" ng-model="vm.data.dias">',o+='<i class="icon ion-ios-plus"></i>',o+="</div>"}function w(){return t.show({template:$(),title:"Informar os Dias",scope:e,buttons:[{text:"<b>Processar Relatório</b>",type:"button-balanced",onTap:function(o){P.data.dias?b():o.preventDefault()}}]})}function I(o){for(var e=o[0],t=c.ContarObjetos(e),n=0,a=0,i=0;i<t;)a=u.ConverterParaFloat(e[i].VALOR),n+=a,i++;return n}var P=this;P.listagem=!0,P.titulo="Relação de Caixas",P.dias="",P.datahora="",P.dataInicial="",P.totalCancelamentos="",P.movimento=[],P.resumoMovimento=[],P.resumoVendas=[],P.balancete=[],P.cancelamentos=[],P.dados=[],P.init=l,P.GetTurno=d,P.GerarRelatorio=C,P.ProcessarRelatorio=b,P.SelecionarDias=S,P.TemplateSelecionarDias=$,P.PopUpSelecionarDias=w,e.$on("EventLogin",l())}angular.module("sied.controllers").controller("CaixaCtrl",o),o.$inject=["$q","$scope","$ionicPopup","$ionicLoading","$timeout","$ionicScrollDelegate","ClientAPIFactory","TratarDataService","TratarObjetosService","TratarFloatService"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s){function c(){C.nivel=s.getNivel(),l()}function u(){C.comandas=[],C.comanda="",C.tipo="",C.item="",C.index="",C.codigo="",C.relatorio=!0,l()}function l(){n.show(),C.relatorio=!0,o.when(C.relatorio).then(function(){m()}).then(function(){p()}).then(function(){i.scrollTop()})}function d(){e(function(){n.hide()},1e3)}function m(){n.show(),C.mesas=[],r.async("GetRetornaMesasEmMovimento").then(function(o){n.show({template:"Carregando Movimento das Mesas"}),C.mesas=o,d()})}function p(){n.show(),C.cartoes=[],r.async("GetRetornaCartoesEmMovimento").then(function(o){n.show({template:"Carregando Movimento dos Cartões"}),C.cartoes=o,d()})}function f(o,t){n.show(),C.comanda=o,C.tipo=t,C.relatorio=!1,C.comandas=[],r.async("GetRetornaItensDaComanda/"+o+"/"+t).then(function(o){n.show({template:"Carregando Itens da Comanda"}),C.comandas=o,e(function(){n.hide(),i.scrollTop()},1e3)})}function h(o,e,t){return a.show({title:"Atenção",template:"Deseja excluir esse item?",buttons:[{text:"Não",type:"button-calm"},{text:"<b>Sim</b>",type:"button-assertive",onTap:function(n){n&&(C.item=o,C.index=e,C.codigo=t,v())}}]})}function g(o,e,t){h(o,t,e)}function v(){n.show(),r.async("GetCancelaItemDaComanda/"+C.item+"/"+C.codigo+"/"+C.comanda+"/"+C.tipo+"/2").then(function(o){n.show({template:"Removendo Item"}),C.comandas[0].splice(C.index,1),C.item="",C.index="",e(function(){n.hide(),0==C.comandas[0].length&&u()},500)})}var C=this;C.titulo="Cancelamento de itens",C.relatorio=!1,C.mesas=[],C.cartoes=[],C.comandas=[],C.comanda="",C.item="",C.index="",C.tipo="",C.codigo="",C.nivel="",C.init=c,C.Voltar=u,C.CarregarItemsEmMovimento=l,C.RetornaMesasEmMovimento=m,C.RetornaCartoesEmMovimento=p,C.RetornaItemsDaComanda=f,C.EnviarCancelamento=g,C.RemoverItemDaComanda=v,t.$on("EventLogin",c())}angular.module("sied.controllers").controller("CancelamentosCtrl",o),o.$inject=["$q","$timeout","$scope","$ionicLoading","$ionicPopup","$ionicScrollDelegate","ClientAPIFactory","UsuarioFactory"]}(),function(){"use strict";function o(o,e,t,n,a,i){function r(){s()}function s(){n.show(),p.dados=[],i.async("GetRetornaProdutoPorPrecoCompra").then(function(o){n.show({template:"Carregando Produtos pelo preço de compra"}),p.dados=o,p.relatorio=!0,e(function(){n.hide(),a.scrollTop()},1e3)})}function c(){e(function(){n.hide()},1e3)}function u(o){n.show(),p.cabecalho=[],i.async("GetRetornaCompraCabecalhoItem/"+o.Codigo).then(function(o){n.show(),p.cabecalho=o,c()})}function l(o){n.show(),p.detalhes=[],i.async("GetRetornaCompraItem/"+o.Codigo).then(function(o){n.show(),p.detalhes=o,c()})}function d(e){n.show(),p.relatorio=!1,o.when(p.relatorio).then(u(e)).then(l(e)).then(function(){a.scrollTop()})}function m(){p.cabecalho=[],p.detalhes=[],p.relatorio=!0,n.show(),e(function(){n.hide()},1e3)}var p=this;p.titulo="Compras",p.relatorio=!1,p.dados=[],p.cabecalho=[],p.detalhes=[],p.init=r,p.Voltar=m,p.RetornarProdutosByPrecoCompra=s,p.RetornarDetalhesDoItem=d,t.$on("EventLogin",r())}angular.module("sied.controllers").controller("ComprasCtrl",o),o.$inject=["$q","$timeout","$scope","$ionicLoading","$ionicScrollDelegate","ClientAPIFactory"]}(),function(){"use strict";function o(o,e,t,n,a,i,r){function s(){C.mensagem=[],n.show(),i.allServidores().then(function(o){C.servidores=o,c()})}function c(){e(function(){n.hide()},1e3)}function u(){if(n.show(),C.mensagem=[],!C.Ip)return C.mensagem[0]="Nenhum IP foi especificado",c(),!1;i.findByValue(C.Ip).then(function(t){var a=t.Ip+":"+t.Porta;C.servidor={},C.Ip="",r.limparServidores().then(function(){var t=new Date,i=""+t.getDay()+t.getMonth()+t.getFullYear()+t.getHours()+t.getMinutes()+t.getSeconds();r.addServidor({_id:i,servidor:a}).then(function(t){e(function(){n.hide(),o.location.reload(!0)},500)})})})}function l(){C.mensagem=[],C.servidor={Ip:"",Porta:""};g()}function d(){if(n.show(),p(),!(C.mensagem.length>0)){C.Ip=C.servidor.Ip;var o=new Date,e=""+o.getDay()+o.getMonth()+o.getFullYear()+o.getHours()+o.getMinutes()+o.getSeconds();C.servidor={_id:e,Ip:C.servidor.Ip,Porta:C.servidor.Porta},i.addServidor(C.servidor).then(function(o){C.Ip=C.servidor.Ip,u()})}}function m(){n.show(),i.findByValue(C.Ip).then(function(o){var e=o.Ip+":"+o.Porta;r.findByValue(e).then(function(o){o&&r.deleteServidor(o).then(function(){c()})}),i.deleteServidor(o).then(function(){c()})})}function p(){C.mensagem=[],""==C.servidor.Ip&&C.mensagem.push("O IP é Obrigatório"),""==C.servidor.Porta&&C.mensagem.push("A Porta é Obrigatório")}function f(){C.mensagem=[]}function h(){return C.mensagem=[],""==C.Ip?(C.mensagem.push("Nenhum IP foi especificado"),!1):a.show({title:"Atenção",template:"Deseja excluir esse Servidor?",scope:t,buttons:[{text:"Não",type:"button-calm"},{text:"Sim",type:"button-assertive",onTap:function(o){m()}}]})}function g(){return a.show({title:"Novo Servidor",template:v(),scope:t,buttons:[{text:"Cancelar",type:"button-calm"},{text:"Salvar",type:"button-positive",onTap:function(o){if(p(),!(C.mensagem.length>0))return d();o.preventDefault()}}]})}function v(){var o="";return o+='<div class="item item-assertive" ng-show="vm.mensagem.length > 0">',o+="<ul>",o+='<li ng-repeat="item in vm.mensagem">{{ item }}</li>',o+="</ul>",o+="</div>",o+='<label class="item item-input item-stacked-label">',o+='<span class="input-label">IP do Servidor</span>',o+='<input type="text" name="Ip" ng-model="vm.servidor.Ip" ng-change="vm.LimparMensagem()" autofocus />',o+="</label>",o+='<label class="item item-input item-stacked-label">',o+='<span class="input-label">Porta do Servidor</span>',o+='<input type="text" name="Porta" ng-model="vm.servidor.Porta" ng-change="vm.LimparMensagem()" />',o+="</label>"}var C=this;C.servidores=[],C.servidor={},C.selecionado={},C.index="",C.mensagem=[],C.host="",C.Ip="",C.init=s,C.selecionar=u,C.novo=l,C.salvar=d,C.excluir=m,C.validarDados=p,C.LimparMensagem=f,C.PopUpConfirmarExclusao=h,C.PopUpNovoServidor=g,C.TemplateNovoServidor=v,s()}angular.module("sied.controllers").controller("ConfigCtrl",o),o.$inject=["$window","$timeout","$scope","$ionicLoading","$ionicPopup","DataFactory","ServidorFactory"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s,c){function u(){a.show(),e.when(p.caixa).then(m())}function l(){a.show(),p.caixa=[],r.async("GetVendaEmConsumoCaixa").then(function(o){a.show({template:"Carregando Vendas em Caixa"}),p.caixa=o,t(function(){a.hide()},1e3)})}function d(){a.show(),p.consumo=[],r.async("GetVendaEmConsumo").then(function(o){a.show({template:"Carregando Vendas em Consumo"}),p.consumo=o,t(function(){a.hide()},1e3)})}function m(){e.when(p.caixa).then(l()).then(d()),i.scrollTop()}var p=this;p.titulo="Vendas em Consumo",p.controlador="ConsumoCtrl",p.metodo="",p.caixa=[],p.consumo=[],p.init=u,p.GerarRelatorio=m,p.GetVendaEmConsumoCaixa=l,p.GetVendaEmConsumo=d,n.$on("EventLogin",u())}angular.module("sied.controllers").controller("ConsumoCtrl",o),o.$inject=["$log","$q","$timeout","$scope","$ionicLoading","$ionicScrollDelegate","ClientAPIFactory","TratarDataService","TratarObjetosService"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s,c,u){function l(){g.dataInicial=s.SubtrairDataSemFormato(1),g.dataFinal=new Date,d()}function d(){a.show(),e.when(g.dataFinal).then(f()).then(h()).then(function(){i.scrollTop()})}function m(){for(var o=g.fechados,e=0,t=c.ContarObjetos(o[0]),n=0;n<t;)e+=u.ConverterParaFloat(o[0][n].Total),n++;g.totalFechados=e,g.totalGeral=g.totalFechados}function p(){for(var o=g.consumos,e=0,t=c.ContarObjetos(o[0]),n=0;n<t;)e+=u.ConverterParaFloat(o[0][n].Total),n++;g.totalConsumos=e,g.totalGeral=g.totalGeral+g.totalConsumos,g.totalFechados.toFixed(2),g.totalFechados.toFixed(2),g.totalGeral.toFixed(2),g.totalGeral=u.ConverterParaString(g.totalGeral),g.totalConsumos=u.ConverterParaString(g.totalConsumos),g.totalFechados=u.ConverterParaString(g.totalFechados)}function f(){a.show(),g.fechados=[],g.totalFechados=0;var o=s.formatarDataHora(g.dataInicial),e=s.formatarDataHora(g.dataFinal);r.async("GetRetornaCouvertFechado/"+o+"/"+e).then(function(o){a.show({template:"Carregando Couvert Fechado"}),g.fechados=o,c.ContarObjetos(g.fechados[0])>0&&m(),t(function(){a.hide()},1e3)})}function h(){a.show(),g.consumos=[],g.totalConsumos=0,r.async("GetRetornaCouvertMovimento").then(function(o){a.show({template:"Carregando Couvert em Movimento"}),g.consumos=o,c.ContarObjetos(g.consumos[0])>0&&p(),t(function(){a.hide()},1e3)})}var g=this;g.dataInicial="",g.dataFinal="",g.fechados=[],g.consumos=[],g.totalGeral=0,g.totalConsumos=0,g.totalFechados=0,g.init=l,g.GerarCouvert=d,g.GetRetornaCouvertFechado=f,g.GetRetornaCouvertMovimento=h,n.$on("EventLogin",l())}angular.module("sied.controllers").controller("CouvertCtrl",o),o.$inject=["$log","$q","$timeout","$scope","$ionicLoading","$ionicScrollDelegate","ClientAPIFactory","TratarDataService","TratarObjetosService","TratarFloatService"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s){function c(){u(),v.grupo=0,v.tipo=0,m()}function u(){r.async("GetGrupoDeProduto").then(function(o){v.grupos=[],v.grupos=o,s.ContarObjetos(v.grupos)>0&&v.grupos[0].unshift({Codigo:0,Grupo:"Todos"})})}function l(){v.data={},v.data.tipo=v.tipo;h()}function d(){v.data={},v.data.grupo=v.grupo;g()}function m(){t.show();var n={grupo:v.grupo,tipo:v.tipo};v.relatorio=!1,v.dados=[],o.when(n).then(function(o){var n="";switch(o.tipo){case 0:n=0;break;case 1:n="EstoqueZero";break;case 2:n="AbaixoEstoqueMinimo";break;case 3:n="AbaixoPontoPedido";break;case 4:n="AbaixoEstoquePadrao"}r.async("GetEstoque/"+o.grupo+"/"+n).then(function(o){t.show({template:"Carregando Estoque"}),v.dados=o,s.ContarObjetos(v.dados[0])>0&&(v.relatorio=!0),e(function(){t.hide(),i.scrollTop()},1e3)})})}function p(){for(var o=0,e=v.tipos.length,t="<ion-list>";o<e;)t+='<ion-radio ng-model="vm.data.tipo" ng-value="'+v.tipos[o].id+'" style="font-size: 12px;">'+v.tipos[o].descricao+"</ion-radio>",o++;return t+="</ion-list>"}function f(){for(var o=0,e=s.ContarObjetos(v.grupos[0]),t="<ion-list>";o<e;)t+='<ion-radio ng-model="vm.data.grupo" ng-value="'+v.grupos[0][o].Codigo+'" style="font-size: 12px;" >'+v.grupos[0][o].Grupo+"</ion-radio>",o++;return t+="</ion-list>"}function h(){return a.show({template:p(),title:"Informar o Tipo de Relatório",scope:n,buttons:[{text:"<b>Gerar Relatório</b>",type:"button-balanced",onTap:function(o){v.tipo=v.data.tipo,m()}}]})}function g(){return a.show({template:f(),title:"Informar o Grupo",scope:n,buttons:[{text:"<b>Selecionar Grupo</b>",type:"button-balanced",onTap:function(o){v.grupo=v.data.grupo,m()}}]})}var v=this;v.titulo="Controle de Estoque",v.relatorio=!1,v.tipo=0,v.grupo=0,v.dados=[],v.grupos=[],v.tipos=[{id:0,descricao:"Todos"},{id:1,descricao:"Estoque Zero"},{id:2,descricao:"Abaixo do Estoque Mínimo"},{id:3,descricao:"Abaixo do Ponto de Pedido"},{id:4,descricao:"Abaixo do Estoque Padrão"}],v.init=c,v.LoadGrupos=u,v.SetTipo=l,v.SetGrupo=d,v.TemplateSetTipo=p,v.TemplateSetGrupo=f,v.PopUpSetTipo=h,v.PopUpSetGrupo=g,v.GerarRelatorio=m,n.$on("EventLogin",c())}angular.module("sied.controllers").controller("EstoqueCtrl",o),o.$inject=["$q","$timeout","$ionicLoading","$scope","$ionicPopup","$ionicScrollDelegate","ClientAPIFactory","TratarObjetosService"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s,c,u){function l(){a.show(),g.dataFinal=new Date,o.when(g.dataFinal).then(function(){g.dataInicial=u.SubtrairDataSemFormato(1)}).then(function(){h()})}function d(o){s.copy(o).then(function(){console.log(o)})}function m(o){var e="<strong> Título: "+o.Titulo+"<br />";return e+="<strong> Fornecedor: "+o.Fornecedor+"<br />",e+="<strong> Valor: "+o.Valor+"<br />",e+="<strong> Vencimento: "+o.Vencimento,""!==o.Barra&&(e+="<br /><strong>Cod.Barra: </strong>"+o.Barra.substring(0,18)),e}function p(o){return i.show({title:"Copiar Código de Barra",template:m(o),buttons:[{text:"Sair",type:"button-calm"},{text:"Copiar",type:"button-balanced",onTap:function(e){e&&d(o.Barra)}}]})}function f(o){if(""!=o.Titulo||""!=o.Fornecedor||""!=o.Vencimento){p(o)}}function h(){a.show();var o={d1:u.formatarDataAPI(g.dataInicial),d2:u.formatarDataAPI(g.dataFinal)};g.dados=[],c.async("GetContasAPagar/"+o.d1+"/"+o.d2).then(function(o){a.show({template:"Carregando Financeiro"}),g.dados=o}).then(function(){e(function(){a.hide(),r.scrollTop()},1e3)})}var g=this;g.titulo="Financeiro",g.dados=[],g.relatorio=!1,g.dataInicial="",g.dataFinal="",g.init=l,g.copiarTexto=d,g.pegarCodigoDeBarra=f,g.GerarRelatorio=h,n.$on("EventLogin",l())}angular.module("sied.controllers").controller("FinanceiroCtrl",o),o.$inject=["$q","$timeout","$log","$scope","$ionicLoading","$ionicPopup","$ionicScrollDelegate","$cordovaClipboard","ClientAPIFactory","TratarDataService"]}(),function(){"use strict";function o(o,e,t,n,a,i){function r(){n.toggleLeft()}function s(){u.cnpj=a.cnpj}function c(){t.confirm({title:"Atenção",template:"Tem certeza que deseja sair do sistema?"}).then(function(o){o&&ionic.Platform.exitApp()})}var u=this;u.ConfirmarSaida=c,u.toggleLeft=r,u.init=s,s(),o.registerBackButtonAction(function(o){c()},100)}angular.module("sied.controllers").controller("InicioCtrl",o),o.$inject=["$ionicPlatform","ClientAPIFactory","$ionicPopup","$ionicSideMenuDelegate","$rootScope","$log"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s,c,u,l){function d(){D.menu=[],D.slide=[],m().then(function(o){if(!o)return void f(0).then(function(o){D.menu=o.menu,D.slide=o.slide});D.host=o[0],r.setConfig(D.host.servidor),P()}).catch(function(o){f(0).then(function(o){D.menu=o.menu,D.slide=o.slide})})}function m(){var o=e.defer();return a.lastServidor().then(function(e){o.resolve(e)},function(e){o.reject(e)}),o.promise}function p(o){D.index=o,D.swiper.slideTo(o)}function f(o){var t=e.defer(),n=[],a=[],r=0,s=0;return i.montar(o).then(function(o){for(a=o,r=o.length,n.push({Evento:"vm.preLogin()",Icone:"ion-locked",Nome:"Login",Index:"",Template:""});s<r;)n.push({Evento:o[s].Evento,Icone:o[s].Icone,Nome:o[s].Nome,Template:o[s].Template}),s++;n.push({Evento:"vm.Sair()",Icone:"ion-power",Nome:"Sair",Index:"",Template:""}),t.resolve({slide:a,menu:n})}),t.promise}function h(){var o=D.dados.usuario;D.usuario=D.usuarios[0][o],x(),D.popup.close()}function g(){D.mensagem=[],""==D.dados.senha&&D.mensagem.push("O campo Senha é obrigatório"),D.dados.senha!=D.usuario.Senha&&D.mensagem.push("A senha informada é inválida")}function v(){var o="";return o+='<div class="item item-assertive" ng-show="vm.mensagem.length > 0">',o+="<ul>",o+='<li ng-repeat="item in vm.mensagem">{{ item }}</li>',o+="</ul>",o+="</div>",o='<input ng-model="vm.dados.senha" type="number" autofocus ng-change="vm.LimparMensagem()"/>'}function C(o){for(var e="",t=0;t<o;)e+='<ion-radio ng-model="vm.dados.usuario" ng-value="'+t+'" ng-click="vm.SelecionarUsuario()">'+D.usuarios[0][t].Nome+"</ion-radio>",t++;return e}function b(){return D.menu=[],D.slide=[],t.show({title:"Informe a senha",template:v(),scope:o,buttons:[{text:"Sair",type:"button-assertive",onTap:function(o){f(0).then(function(o){D.menu=o.menu,D.slide=o.slide,D.logado=!1,ionic.Platform.exitApp()})}},{text:"Voltar",type:"button-positive",onTap:function(o){D.logado=!1,P()}},{text:"Entrar",type:"button-balanced",onTap:function(o){if(g(),!(D.mensagem.length>0))return D.logado=!0,$();S()}}]})}function S(){var o="",e=0;for(o="<ul>";e<D.mensagem.length;)o+="<li>"+D.mensagem[e]+"</li>",e++;return o+="</ul>",t.alert({title:"Atenção",template:o,buttons:[{text:"Tente Novamente",type:"button-balanced",onTap:function(o){return o.preventDefault(),b()}}]})}function $(){g(),D.mensagem.length>0||(c.setParams(D.usuario),f(1).then(function(e){D.menu=e.menu,D.slide=e.slide,D.checarLogin=!0,o.$emit("EventLogin",T(D.usuario))}))}function w(){D.mensagem=[]}function I(e){return t.show({title:"Selecione o usuario",template:C(e),scope:o})}function P(){D.menu=[],D.slide=[],D.checarLogin=!1,D.dados.usuario="",s.asyncLogin("GetLogin").then(function(o){D.usuarios=o;var e=u.ContarObjetos(D.usuarios[0]);s.async("GetRetornaCnpjDaEmpresa").then(function(o){n.cnpj=o[0]}),D.popup=I(e)}).catch(function(o){f(0).then(function(o){D.menu=o.menu,D.slide=o.slide})})}function T(o){D.usuario=o}function x(){D.dados.senha="";b()}function y(){0!==o.index&&(D.index=o.index-1,p(o.index))}function G(){ionic.Platform.exitApp()}var D=this;D.hide=!1,D.index=0,D.selecionado={},D.dados={usuario:"",senha:""},D.mensagem=[],D.servidores=[],D.usuarios=[],D.usuario={},D.menu=[],D.popup="",D.logado=!1,D.checarLogin=!1,D.dashboard={swiper:!1,slider:!1,activeIndexView:0},D.configurarServidor=m,D.MudarSlide=p,D.SelecionarUsuario=h,D.LimparMensagem=w,D.validarDados=g,D.Voltar=y,D.Sair=G,D.login=x,D.preLogin=P,D.init=d,o.$on("$ionicSlides.sliderInitialized",function(o,e){e&&e.slider&&(D.swiper=e.slider)}),o.$on("$ionicSlides.slideChangeStart",function(e,t){!t||!t.slider||!t.slider.snapIndex<0||(o.$$phase?D.dashboard.activeIndexView=t.slider.snapIndex:o.$apply(function(){D.dashboard.activeIndexView=t.slider.snapIndex}))})}angular.module("sied.controllers").controller("PrincipalCtrl",o),o.$inject=["$scope","$q","$ionicPopup","$rootScope","ServidorFactory","MenuFactory","HostFactory","ClientAPIFactory","UsuarioFactory","TratarObjetosService","$log"]}(),function(){"use strict";function o(o,e,t){var n=this;n.titulo="SobreNos",n.Empresa={Nome:"Sied Sistemas",Cnpj:"03.367.362/0001-03",CEP:"77000-000",Logradouro:"501 Sul, Av. Teotônio Segurado, Conj. 01",Complemento:"Lt. 03, Ed. Executive Center, Sala 403",Bairro:"Plano Diretor Sul",Numero:"s/n",Cidade:"Palmas",Estado:"TO",T_Empresa:"(63) 3322-9404",T_Vendas:"",T_Suporte:"(63) 98446-0444",Email:"odair@siedsistemas.com.br",Site:"siedsistemas.com.br",Ano_Abertura:"1998"}}angular.module("sied.controllers").controller("SobreCtrl",o),o.$inject=["$ionicPlatform","$ionicPopup","$ionicSideMenuDelegate"]}(),function(){"use strict";function o(o,e,t,n,a,i,r,s,c,u,l){function d(){x.tipo=1;var o=x.tipo;e.when(o).then(function(){s.async("GetHoraPadrao").then(function(o){x.p1=o[0][0].HoraInicial,x.p2=o[0][0].HoraFinal,P()}).then(function(){b()})})}function m(){x.dados=[],x.rodape=[],b(),r.scrollTop()}function p(){5!==x.tipo&&b()}function f(){5!==x.tipo&&b()}function h(o){return 2===o?"GetVendaPorProduto":3===o?"GetVendaPorGrupoProduto":4===o?"GetVendaGraficoPorVendedor":5===o?"GetVendaGraficoAnual":void 0}function g(){a.hide();var o=new Date;x.data={},x.data.ano=o.getFullYear();I()}function v(){if(4==x.tipo)for(var o=0,e=u.ContarObjetos(x.dados[0]);o<e;)x.data[[o]]=l.ConverterParaFloat(x.dados[0][o].Venda),x.labels[o]=x.dados[0][o].Vendedor.substring(0,3),o++;x.detalhes=[]}function C(o){if(a.show(),x.detalhes=[],4!=x.tipo)return s.async("GetTotalVendaPorComanda/"+o.d1+"/"+o.d2).then(function(o){a.show({template:"Carregando Vendas Por Comanda"}),x.detalhes=o,t(function(){a.hide()},1e3)}),o}function b(){a.show(),x.labels=[],x.data=[],x.dados=[];var o=h(x.tipo);if(5===x.tipo)return void g();var n={d1:c.formatarDataHora(x.dataInicial),d2:c.formatarDataHora(x.dataFinal)};4===x.tipo&&(n.d1=c.formatarDataAPI(x.dataInicial),n.d2=c.formatarDataAPI(x.dataFinal),x.series=["Venda R$"]),e.when(n).then(function(e){return x.tipo>1&&s.async(o+"/"+e.d1+"/"+e.d2).then(function(o){a.show({template:"Carregando"}),x.dados=o,u.ContarObjetos(x.dados)>0&&(x.series=["Ano"],v()),t(function(){a.hide(),r.scrollTop()},1e3)}),e}).then(function(o){return C(o),o}).then(function(o){return $(o.d1,o.d2),o}).then(function(){r.scrollTop(),x.relatorio=!0})}function S(o){a.show(),x.labels=[],x.data=[],x.detalhes=[],x.dados=[],x.mostrarRodape=!1,s.async("GetVendaGraficoAnual/"+o).then(function(o){a.show({template:"Gerando Gráfico"}),x.dados=o,u.ContarObjetos(x.dados[0])>0&&T(),t(function(){a.hide(),r.scrollTop()},1e3)})}function $(o,e){a.show(),x.rodape=[],5!=x.tipo&&s.async("GetCalculaRodapeVenda/"+o+"/"+e).then(function(o){a.show({template:"Calculando Relatório de Vendas"}),x.rodape=o,u.ContarObjetos(x.rodape)>0&&(x.mostrarRodape=!0),t(function(){a.hide()},1e3)})}function w(){var o='<div class="list">';return o+='<label class="item item-input">',o+='<span class="input-label">Informar o ano: </span>',o+='<input type="number" ng-model="vm.data.ano" >',o+="</label>",o+="</div>"}function I(){return i.show({template:w(),title:"Informar o Ano",scope:n,buttons:[{text:"<b>Gerar Gráfico</b>",type:"button-balanced",onTap:function(o){x.data.ano?S(x.data.ano):o.preventDefault()}}]})}function P(){var o=x.p1.split(":"),e=x.p2.split(":");x.dataInicial=c.SubtrairDataSemFormato(1),x.dataInicial.setHours(o[0]),x.dataInicial.setMinutes(o[1]),x.dataInicial.setSeconds(o[2]),x.dataFinal=new Date,x.dataFinal.setHours(e[0]),x.dataFinal.setMinutes(e[1]),x.dataFinal.setSeconds(e[2])}function T(){for(var o=0,e=0,t=u.ContarObjetos(x.dados[0]),n=0;n<t;)x.data[[n]]=l.ConverterParaFloat(x.dados[0][n].Valor),x.labels[n]=x.dados[0][n].Mes.substring(0,3),o=l.ConverterParaFloat(x.dados[0][n].Valor),e+=o,n++;x.totalAno=l.ConverterParaString(e.toFixed(2))}var x=this;x.ano="",x.totalAno=0,x.titulo="Relatório de Vendas",x.mostrarRodape=!1,x.tipo="",x.dataInicial="",x.dataFinal="",x.p1="",x.p2="",x.colors=["rgb(159,204,0)"],x.dados=[],x.labels=[],x.series=[],x.data=[],x.tipos=[{id:1,descricao:"Geral"},{id:3,descricao:"Por Grupo de Produtos"},{id:4,descricao:"Por Vendedor"},{id:5,descricao:"Gerar Gráfico Anual"}],x.detalhes=[],x.rodape=[],x.init=d,x.Refresh=m,x.SetDataInicial=p,x.SetDataFinal=f,x.RetornarMetodo=h,x.GetAno=g,x.GetVenda=b,x.GerarGraficoPorAno=S,x.GerarRodape=$,x.TemplateGetAno=w,x.PrepararDatas=P,x.CalcularTotalAno=T,n.$on("EventLogin",d())}angular.module("sied.controllers").controller("VendasCtrl",o),o.$inject=["$log","$q","$timeout","$scope","$ionicLoading","$ionicPopup","$ionicScrollDelegate","ClientAPIFactory","TratarDataService","TratarObjetosService","TratarFloatService"]}();
+(function () {
+  'use strict';
+
+  angular.module('sied.controllers').controller('CaixaCtrl', CaixaCtrl);
+
+  CaixaCtrl.$inject = [
+    '$q',
+    '$scope',
+    '$ionicPopup',
+    '$ionicLoading',
+    '$timeout',
+    '$ionicScrollDelegate',
+    'ClientAPIFactory',
+    'TratarDataService',
+    'TratarObjetosService',
+    'TratarFloatService'
+  ];
+
+  function CaixaCtrl($q,
+                     $scope,
+                     $ionicPopup,
+                     $ionicLoading,
+                     $timeout,
+                     $ionicScrollDelegate,
+                     ClientAPIFactory,
+                     TratarDataService,
+                     TratarObjetosService,
+                     TratarFloatService) {
+    var vm = this;
+
+    vm.listagem = true;
+    vm.titulo = 'Relação de Caixas';
+    vm.dias = '';
+    vm.datahora = '';
+    vm.dataInicial = '';
+    vm.totalCancelamentos = '';
+    vm.movimento = [];
+    vm.resumoMovimento = [];
+    vm.resumoVendas = [];
+    vm.balancete = [];
+    vm.cancelamentos = [];
+    vm.dados = [];
+
+    vm.init = init;
+    vm.GetTurno = GetTurno;
+    vm.GerarRelatorio = GerarRelatorio;
+    vm.ProcessarRelatorio = ProcessarRelatorio;
+    vm.SelecionarDias = SelecionarDias;
+    vm.TemplateSelecionarDias = TemplateSelecionarDias;
+    vm.PopUpSelecionarDias = PopUpSelecionarDias;
+
+    $scope.$on('EventLogin', init());
+
+    function init() {
+      vm.dias = 1;
+
+      GetTurno();
+    }
+
+    function GetTurno() {
+      $ionicLoading.show();
+
+      vm.caixa = [];
+      vm.movimento = [];
+      vm.resumoMovimento = [];
+      vm.resumoVendas = [];
+      vm.balancete = [];
+      vm.cancelamentos = [];
+      vm.totalCancelamentos = '';
+
+      vm.listagem = true;
+      ClientAPIFactory.async('GetTurno/' + vm.dias)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Turnos'});
+          vm.dados = d;
+
+          $timeout(function () {
+            $ionicLoading.hide();
+            $ionicScrollDelegate.scrollTop();
+          }, 1000);
+        });
+
+    }
+
+    function removerLoading() {
+      $timeout(function () {
+        $ionicLoading.hide()
+      }, 1000);
+    }
+
+    function GetMovimentoDoTurno() {
+      $ionicLoading.show();
+      vm.movimento = [];
+      ClientAPIFactory.async('GetMovimentoDoTurno/' + vm.caixa.ID_CAIXA + '/' + vm.caixa.TURNO)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Movimentos do Turno'});
+
+          vm.movimento = d;
+
+          removerLoading();
+        });
+    }
+
+    function GetResumoDoMovimentoDoTurno() {
+      $ionicLoading.show();
+      vm.resumoMovimento = [];
+      ClientAPIFactory.async('GetResumoDoMovimentoDoTurno' + '/' + vm.caixa.ID_CAIXA + '/' + vm.caixa.TURNO)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Resumo dos Movimentos do Turno'});
+
+          vm.resumoMovimento = d;
+
+          removerLoading();
+        });
+    }
+
+    function GetResumoDaVendaDoTurno() {
+      $ionicLoading.show();
+      vm.resumoVendas = [];
+      ClientAPIFactory.async('GetResumoDaVendaDoTurno' + '/' + vm.caixa.ID_CAIXA + '/' + vm.caixa.TURNO)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Resumo das Vendas do Turno'});
+          vm.resumoVendas = d;
+
+          removerLoading();
+        });
+    }
+
+    function GetBalanceteDoTurno() {
+      $ionicLoading.show();
+      vm.balancete = [];
+      ClientAPIFactory.async('GetBalanceteDoTurno' + '/' + vm.caixa.ID_CAIXA + '/' + vm.caixa.TURNO)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Balancete do Turno'});
+          vm.balancete = d;
+
+          removerLoading();
+        });
+    }
+
+    function GetCancelamentoNoTurno() {
+      $ionicLoading.show();
+      vm.cancelamentos = [];
+      ClientAPIFactory.async('GetCancelamentoNoTurno' + '/' + vm.caixa.ID_CAIXA + '/' + vm.caixa.TURNO)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Cancelamentos do Turno'});
+          if (TratarObjetosService.ContarObjetos(d[0]) > 0) {
+            var total = TratarCancelamentos(d);
+            vm.cancelamentos = d;
+            vm.totalCancelamentos = TratarFloatService.ConverterParaString(total.toFixed(2));
+          }
+          removerLoading();
+        })
+      ;
+    }
+
+    function GerarRelatorio(caixa) {
+      vm.listagem = false;
+      vm.caixa = caixa;
+      vm.datahora = TratarDataService.RetornarDataHora();
+
+      $q.when(vm.caixa)
+        .then(GetMovimentoDoTurno())
+        .then(GetResumoDoMovimentoDoTurno())
+        .then(GetResumoDaVendaDoTurno())
+        .then(GetBalanceteDoTurno())
+        .then(GetCancelamentoNoTurno())
+      ;
+    }
+
+    function ProcessarRelatorio() {
+      vm.dias = vm.data.dias;
+
+      GetTurno();
+    }
+
+    function SelecionarDias() {
+      vm.data = {};
+      vm.data.dias = 1;
+
+      var alertPopup = PopUpSelecionarDias();
+    }
+
+    function TemplateSelecionarDias() {
+      var texto = '<label class="item item-input">';
+      texto += '<span class="input-label">Dias: </span>';
+      texto += '<input type="text" ng-model="vm.data.dias" readonly>';
+      texto += '</label>';
+      texto += '<div class="item range range-positive">';
+      texto += '<i class="icon ion-ios-minus"></i>';
+      texto += '<input type="range" min="1" max="31" ng-model="vm.data.dias">';
+      texto += '<i class="icon ion-ios-plus"></i>';
+      texto += '</div>';
+      return texto;
+    }
+
+    function PopUpSelecionarDias() {
+      return $ionicPopup.show({
+        template: TemplateSelecionarDias(),
+        title: 'Informar os Dias',
+        scope: $scope,
+        buttons: [
+          {
+            text: '<b>Processar Relatório</b>',
+            type: 'button-balanced',
+            onTap: function (e) {
+              if (!vm.data.dias) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                ProcessarRelatorio();
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    function TratarCancelamentos(d) {
+      var dados = d[0];
+      var count = TratarObjetosService.ContarObjetos(dados);
+      var total = 0;
+      var valor = 0;
+      var i = 0;
+
+      while (i < count) {
+        valor = TratarFloatService.ConverterParaFloat(dados[i].VALOR);
+        total = total + valor;
+        i++;
+      }
+      return total;
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('sied.controllers').controller('CancelamentosCtrl', CancelamentosCtrl);
+
+  CancelamentosCtrl.$inject = [
+    '$q',
+    '$timeout',
+    '$scope',
+    '$ionicLoading',
+    '$ionicPopup',
+    '$ionicScrollDelegate',
+    'ClientAPIFactory',
+    'UsuarioFactory'
+  ];
+
+  function CancelamentosCtrl($q, $timeout, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, UsuarioFactory) {
+    var vm = this;
+
+    vm.titulo = 'Cancelamento de itens';
+    vm.relatorio = false;
+    vm.mesas = [];
+    vm.cartoes = [];
+    vm.comandas = [];
+
+    vm.comanda = '';
+    vm.item = '';
+    vm.index = '';
+    vm.tipo = '';
+    vm.codigo = '';
+    vm.nivel = '';
+
+    vm.init = init;
+    vm.Voltar = Voltar;
+    vm.CarregarItemsEmMovimento = CarregarItemsEmMovimento;
+    vm.RetornaMesasEmMovimento = RetornaMesasEmMovimento;
+    vm.RetornaCartoesEmMovimento = RetornaCartoesEmMovimento;
+    vm.RetornaItemsDaComanda = RetornaItemsDaComanda;
+    vm.EnviarCancelamento = EnviarCancelamento;
+    vm.RemoverItemDaComanda = RemoverItemDaComanda;
+
+    $scope.$on('EventLogin', init());
+
+    function init() {
+      vm.nivel = UsuarioFactory.getNivel();
+
+      CarregarItemsEmMovimento();
+    }
+
+    function Voltar() {
+      vm.comandas = [];
+
+      vm.comanda = '';
+      vm.tipo = '';
+      vm.item = '';
+      vm.index = '';
+      vm.codigo = '';
+
+      vm.relatorio = true;
+
+      CarregarItemsEmMovimento();
+    }
+
+    function CarregarItemsEmMovimento() {
+      $ionicLoading.show();
+
+      vm.relatorio = true;
+
+      $q.when(vm.relatorio)
+        .then(function () {
+          RetornaMesasEmMovimento();
+        })
+        .then(function () {
+          RetornaCartoesEmMovimento();
+        })
+        .then(function () {
+          $ionicScrollDelegate.scrollTop();
+        });
+    }
+
+    function removerLoading() {
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 1000);
+    }
+
+    function RetornaMesasEmMovimento() {
+      $ionicLoading.show();
+      vm.mesas = [];
+      ClientAPIFactory.async('GetRetornaMesasEmMovimento').then(function (d) {
+        $ionicLoading.show({template: 'Carregando Movimento das Mesas'});
+
+        vm.mesas = d;
+
+        removerLoading();
+      });
+    }
+
+    function RetornaCartoesEmMovimento() {
+      $ionicLoading.show();
+      vm.cartoes = [];
+      ClientAPIFactory.async('GetRetornaCartoesEmMovimento').then(function (d) {
+        $ionicLoading.show({template: 'Carregando Movimento dos Cartões'});
+
+        vm.cartoes = d;
+
+        removerLoading();
+      });
+    }
+
+    function RetornaItemsDaComanda(comanda, tipo) {
+      $ionicLoading.show();
+
+      vm.comanda = comanda;
+      vm.tipo = tipo;
+      vm.relatorio = false;
+      vm.comandas = [];
+
+      ClientAPIFactory.async('GetRetornaItensDaComanda/' + comanda + '/' + tipo).then(function (d) {
+        $ionicLoading.show({template: 'Carregando Itens da Comanda'});
+
+        vm.comandas = d;
+
+        $timeout(function () {
+          $ionicLoading.hide();
+
+          $ionicScrollDelegate.scrollTop();
+        }, 1000);
+      });
+    }
+
+    function PopUpEnviarCancelamento(item, index, codigo) {
+      return $ionicPopup.show({
+        title: 'Atenção',
+        template: 'Deseja excluir esse item?',
+        buttons: [
+          {
+            text: 'Não',
+            type: 'button-calm',
+          },
+          {
+            text: '<b>Sim</b>',
+            type: 'button-assertive',
+            onTap: function (e) {
+              if (e) {
+                vm.item = item;
+                vm.index = index;
+                vm.codigo = codigo;
+                RemoverItemDaComanda();
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    function EnviarCancelamento(item, codigo, index) {
+      var confirmPopup = PopUpEnviarCancelamento(item, index, codigo);
+    }
+
+    function RemoverItemDaComanda() {
+      $ionicLoading.show();
+      ClientAPIFactory.async('GetCancelaItemDaComanda/' + vm.item + '/' + vm.codigo + '/' + vm.comanda + '/' + vm.tipo + '/' + 2)
+        .then(function (d) {
+          $ionicLoading.show({template: 'Removendo Item'});
+          vm.comandas[0].splice(vm.index, 1);
+
+          vm.item = '';
+          vm.index = '';
+
+          $timeout(function () {
+            $ionicLoading.hide();
+            if (vm.comandas[0].length == 0) {
+              Voltar();
+            }
+          }, 500);
+        });
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('sied.controllers')
+    .controller('ComprasCtrl', ComprasCtrl);
+
+  ComprasCtrl.$inject = ['$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory'];
+
+  function ComprasCtrl($q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory) {
+    var vm = this;
+
+    vm.titulo = 'Compras';
+    vm.relatorio = false;
+    vm.dados = [];
+    vm.cabecalho = [];
+    vm.detalhes = [];
+
+    vm.init = init;
+    vm.Voltar = Voltar;
+    vm.RetornarProdutosByPrecoCompra = RetornarProdutosByPrecoCompra;
+    vm.RetornarDetalhesDoItem = RetornarDetalhesDoItem;
+
+    $scope.$on('EventLogin', init());
+
+    function init() {
+      RetornarProdutosByPrecoCompra();
+    }
+
+    function RetornarProdutosByPrecoCompra() {
+      $ionicLoading.show();
+      vm.dados = [];
+
+      ClientAPIFactory.async('GetRetornaProdutoPorPrecoCompra')
+        .then(function (d) {
+          $ionicLoading.show({template: 'Carregando Produtos pelo preço de compra'});
+
+          vm.dados = d;
+
+          vm.relatorio = true;
+
+          $timeout(function () {
+            $ionicLoading.hide();
+
+            $ionicScrollDelegate.scrollTop();
+          }, 1000);
+        });
+    }
+
+    function removerLoading() {
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 1000);
+    }
+
+    function GetRetornaCompraCabecalhoItem(item) {
+      $ionicLoading.show();
+      vm.cabecalho = [];
+      ClientAPIFactory.async('GetRetornaCompraCabecalhoItem/' + item.Codigo)
+        .then(function (d) {
+          $ionicLoading.show();
+
+          vm.cabecalho = d;
+
+          removerLoading();
+        });
+    }
+
+    function GetRetornaCompraItem(item) {
+      $ionicLoading.show();
+      vm.detalhes = [];
+      ClientAPIFactory.async('GetRetornaCompraItem/' + item.Codigo)
+        .then(function (d) {
+          $ionicLoading.show();
+
+          vm.detalhes = d;
+
+          removerLoading();
+        });
+    }
+
+    function RetornarDetalhesDoItem(item) {
+      $ionicLoading.show();
+
+      vm.relatorio = false;
+      $q.when(vm.relatorio)
+        .then(GetRetornaCompraCabecalhoItem(item))
+        .then(GetRetornaCompraItem(item))
+        .then(function () {
+          $ionicScrollDelegate.scrollTop();
+        });
+    }
+
+    function Voltar() {
+      vm.cabecalho = [];
+      vm.detalhes = [];
+
+      vm.relatorio = true;
+
+      $ionicLoading.show();
+
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 1000)
+    }
+  }
+})
+();
+
+(function () {
+  'use strict';
+  angular.module('sied.controllers')
+    .controller('ConfigCtrl', ConfigCtrl);
+
+  ConfigCtrl.$inject = [
+    '$window',
+    '$timeout',
+    '$scope',
+    '$ionicLoading',
+    '$ionicPopup',
+    'DataFactory',
+    'ServidorFactory'
+  ];
+
+  function ConfigCtrl($window, $timeout, $scope, $ionicLoading, $ionicPopup, DataFactory, ServidorFactory) {
+    var vm = this;
+
+    vm.servidores = [];
+    vm.servidor = {};
+    vm.selecionado = {};
+    vm.index = '';
+    vm.mensagem = [];
+    vm.host = '';
+    vm.Ip = '';
+
+    vm.init = init;
+    vm.selecionar = selecionar;
+    vm.novo = novo;
+    vm.salvar = salvar;
+    vm.excluir = excluir;
+    vm.validarDados = validarDados;
+    vm.LimparMensagem = LimparMensagem;
+    vm.PopUpConfirmarExclusao = PopUpConfirmarExclusao;
+    vm.PopUpNovoServidor = PopUpNovoServidor;
+    vm.TemplateNovoServidor = TemplateNovoServidor;
+
+    init();
+
+    function init() {
+      vm.mensagem = [];
+
+      $ionicLoading.show();
+      DataFactory.allServidores()
+        .then(function (response) {
+          vm.servidores = response;
+
+          removerLoading();
+        });
+    }
+
+    function removerLoading() {
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 1000);
+    }
+
+    function selecionar() {
+      $ionicLoading.show();
+
+      vm.mensagem = [];
+      if (!vm.Ip) {
+        vm.mensagem[0] = 'Nenhum IP foi especificado';
+
+        removerLoading();
+
+        return false;
+      }
+
+      DataFactory.findByValue(vm.Ip)
+        .then(function (response) {
+          var host = response.Ip + ':' + response.Porta;
+
+          vm.servidor = {};
+          vm.Ip = '';
+
+          ServidorFactory.limparServidores()
+            .then(function () {
+              var d = new Date();
+              var id = "" + d.getDay() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds();
+
+              ServidorFactory.addServidor({_id: id, servidor: host})
+                .then(function (response) {
+                  $timeout(function () {
+                    $ionicLoading.hide();
+
+                    $window.location.reload(true);
+                  }, 500);
+                });
+            });
+        });
+    }
+
+    function novo() {
+      vm.mensagem = [];
+      vm.servidor = {
+        Ip: '',
+        Porta: ''
+      };
+      var popup = PopUpNovoServidor();
+    }
+
+    function salvar() {
+      $ionicLoading.show();
+
+      validarDados();
+      if (vm.mensagem.length > 0) {
+        return;
+      }
+
+      vm.Ip = vm.servidor.Ip;
+      var d = new Date();
+      var id = "" + d.getDay() + d.getMonth() + d.getFullYear() + d.getHours() + d.getMinutes() + d.getSeconds();
+
+      vm.servidor = {_id: id, Ip: vm.servidor.Ip, Porta: vm.servidor.Porta};
+
+      DataFactory.addServidor(vm.servidor)
+        .then(function (response) {
+          vm.Ip = vm.servidor.Ip;
+          selecionar();
+        });
+    }
+
+    function excluir() {
+      $ionicLoading.show();
+
+      DataFactory.findByValue(vm.Ip)
+        .then(function (response) {
+          var host = response.Ip + ':' + response.Porta;
+
+          ServidorFactory.findByValue(host)
+            .then(function (resultado) {
+              if (resultado)
+                ServidorFactory.deleteServidor(resultado)
+                  .then(function () {
+                    removerLoading();
+                  });
+            });
+
+          DataFactory.deleteServidor(response)
+            .then(function () {
+              removerLoading();
+            });
+        });
+    }
+
+    function validarDados() {
+      vm.mensagem = [];
+      if (vm.servidor.Ip == '') {
+        vm.mensagem.push('O IP é Obrigatório');
+      }
+
+      if (vm.servidor.Porta == '') {
+        vm.mensagem.push('A Porta é Obrigatório');
+      }
+    }
+
+    function LimparMensagem() {
+      vm.mensagem = [];
+    }
+
+    function PopUpConfirmarExclusao() {
+      vm.mensagem = [];
+
+      if (vm.Ip == '') {
+        vm.mensagem.push('Nenhum IP foi especificado');
+
+        return false;
+      }
+
+      return $ionicPopup.show({
+        title: 'Atenção',
+        template: 'Deseja excluir esse Servidor?',
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Não',
+            type: 'button-calm'
+          },
+          {
+            text: 'Sim',
+            type: 'button-assertive',
+            onTap: function (e) {
+              excluir();
+            }
+          }
+        ]
+      });
+    }
+
+    function PopUpNovoServidor() {
+      return $ionicPopup.show({
+        title: 'Novo Servidor',
+        template: TemplateNovoServidor(),
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Cancelar',
+            type: 'button-calm'
+          },
+          {
+            text: 'Salvar',
+            type: 'button-positive',
+            onTap: function (e) {
+              validarDados();
+              if (vm.mensagem.length > 0) {
+                e.preventDefault();
+              } else {
+                return salvar();
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    function TemplateNovoServidor() {
+      var tpl = '';
+      tpl += '<div class="item item-assertive" ng-show="vm.mensagem.length > 0">';
+      tpl += '<ul>';
+      tpl += '<li ng-repeat="item in vm.mensagem">{{ item }}</li>';
+      tpl += '</ul>';
+      tpl += '</div>';
+      tpl += '<label class="item item-input item-stacked-label">';
+      tpl += '<span class="input-label">IP do Servidor</span>';
+      tpl += '<input type="text" name="Ip" ng-model="vm.servidor.Ip" ng-change="vm.LimparMensagem()" autofocus />';
+      tpl += '</label>';
+      tpl += '<label class="item item-input item-stacked-label">';
+      tpl += '<span class="input-label">Porta do Servidor</span>';
+      tpl += '<input type="text" name="Porta" ng-model="vm.servidor.Porta" ng-change="vm.LimparMensagem()" />';
+      tpl += '</label>';
+      return tpl;
+    }
+  }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('sied.controllers').controller('ConsumoCtrl', ConsumoCtrl);
+
+    ConsumoCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService'];
+
+    function ConsumoCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService) {
+        var vm = this;
+
+        vm.titulo = 'Vendas em Consumo';
+        vm.controlador = 'ConsumoCtrl';
+        vm.metodo = '';
+
+        vm.caixa = [];
+        vm.consumo = [];
+
+        vm.init = init;
+        vm.GerarRelatorio = GerarRelatorio;
+        vm.GetVendaEmConsumoCaixa = GetVendaEmConsumoCaixa;
+        vm.GetVendaEmConsumo = GetVendaEmConsumo;
+
+        $scope.$on('EventLogin', init());
+
+        function init() {
+            $ionicLoading.show();
+
+            $q.when(vm.caixa)
+                .then(GerarRelatorio());
+        }
+
+        function GetVendaEmConsumoCaixa(){
+            $ionicLoading.show();
+            vm.caixa = [];
+            ClientAPIFactory.async('GetVendaEmConsumoCaixa')
+                .then(function (d) {
+                    $ionicLoading.show({template: 'Carregando Vendas em Caixa'});
+
+                    vm.caixa = d;
+
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                    }, 1000);
+                });
+        }
+
+        function GetVendaEmConsumo() {
+            $ionicLoading.show();
+            vm.consumo = [];
+            ClientAPIFactory.async('GetVendaEmConsumo')
+                .then(function (d) {
+                    $ionicLoading.show({template: 'Carregando Vendas em Consumo'});
+
+                    vm.consumo = d;
+
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                    }, 1000);
+                });
+        }
+
+        function GerarRelatorio() {
+            $q.when(vm.caixa)
+                .then(GetVendaEmConsumoCaixa())
+                .then(GetVendaEmConsumo())
+            ;
+            $ionicScrollDelegate.scrollTop();
+        }        
+    }
+})();
+
+(function () {
+    'use strict';
+    angular.module('sied.controllers')
+        .controller('CouvertCtrl', CouvertCtrl);
+
+    CouvertCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
+
+    function CouvertCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
+        var vm = this;
+
+        vm.dataInicial = '';
+        vm.dataFinal = '';
+        vm.fechados = [];
+        vm.consumos = [];
+        vm.totalGeral = 0;
+        vm.totalConsumos = 0;
+        vm.totalFechados = 0;
+
+        vm.init = init;
+        vm.GerarCouvert = GerarCouvert;
+        vm.GetRetornaCouvertFechado = GetRetornaCouvertFechado;
+        vm.GetRetornaCouvertMovimento = GetRetornaCouvertMovimento;
+
+        $scope.$on('EventLogin', init());
+
+        function init() {
+            vm.dataInicial = TratarDataService.SubtrairDataSemFormato(1);
+            vm.dataFinal = new Date();
+
+            GerarCouvert();
+        }
+
+        function GerarCouvert() {
+            $ionicLoading.show();
+
+            $q.when(vm.dataFinal)
+                .then(GetRetornaCouvertFechado())
+                .then(GetRetornaCouvertMovimento())
+                .then(function(){
+                    $ionicScrollDelegate.scrollTop();
+                })
+            ;
+        }
+
+        function CalcularColvertFechados() {
+            var fechados = vm.fechados;
+            var totalFechados = 0;
+            var countFechados = TratarObjetosService.ContarObjetos(fechados[0]);
+            var i = 0;
+            while (i < countFechados) {
+                totalFechados = totalFechados + TratarFloatService.ConverterParaFloat(fechados[0][i].Total);
+                i++;
+            }
+            vm.totalFechados = totalFechados;
+            vm.totalGeral = vm.totalFechados;
+        }
+
+        function CalcularCouvertEmMovimento() {
+            var consumos = vm.consumos;
+            var totalConsumos = 0;
+            var countConsumos = TratarObjetosService.ContarObjetos(consumos[0]);
+            var i = 0;
+            while (i < countConsumos) {
+                totalConsumos = totalConsumos + TratarFloatService.ConverterParaFloat(consumos[0][i].Total);
+                i++;
+            }
+            vm.totalConsumos = totalConsumos;
+            vm.totalGeral = vm.totalGeral + vm.totalConsumos;
+
+            vm.totalFechados.toFixed(2);
+            vm.totalFechados.toFixed(2);
+            vm.totalGeral.toFixed(2);
+
+            vm.totalGeral = TratarFloatService.ConverterParaString(vm.totalGeral);
+            vm.totalConsumos = TratarFloatService.ConverterParaString(vm.totalConsumos);
+            vm.totalFechados = TratarFloatService.ConverterParaString(vm.totalFechados);
+        }
+
+        function GetRetornaCouvertFechado() {
+            $ionicLoading.show();
+
+            vm.fechados = [];
+            vm.totalFechados = 0;
+
+            var d1 = TratarDataService.formatarDataHora(vm.dataInicial);
+            var d2 = TratarDataService.formatarDataHora(vm.dataFinal);
+
+            ClientAPIFactory.async('GetRetornaCouvertFechado/' + d1 + '/' + d2).then(function (d) {
+                $ionicLoading.show({template: 'Carregando Couvert Fechado'});
+                vm.fechados = d;
+
+                if (TratarObjetosService.ContarObjetos(vm.fechados[0]) > 0) {
+                    CalcularColvertFechados();
+                }
+                $timeout(function () {
+                    $ionicLoading.hide();
+                }, 1000);
+            })
+        }
+
+        function GetRetornaCouvertMovimento() {
+            $ionicLoading.show();
+
+            vm.consumos = [];
+            vm.totalConsumos = 0;
+
+            ClientAPIFactory.async('GetRetornaCouvertMovimento').then(function (d) {
+                $ionicLoading.show({template: 'Carregando Couvert em Movimento'});
+
+                vm.consumos = d;
+                if (TratarObjetosService.ContarObjetos(vm.consumos[0]) > 0) {
+                    CalcularCouvertEmMovimento();
+                }
+                $timeout(function () {
+                    $ionicLoading.hide();
+                }, 1000);
+            });
+        }
+    }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('sied.controllers').controller('EstoqueCtrl', EstoqueCtrl);
+
+    EstoqueCtrl.$inject = ['$q', '$timeout', '$ionicLoading', '$scope', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarObjetosService'];
+
+    function EstoqueCtrl($q, $timeout, $ionicLoading, $scope, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarObjetosService) {
+        var vm = this;
+
+        vm.titulo = 'Controle de Estoque';
+        vm.relatorio = false;
+        vm.tipo = 0;
+        vm.grupo = 0;
+        vm.dados = [];
+        vm.grupos = [];
+        vm.tipos = [
+            {id: 0, descricao: 'Todos'},
+            {id: 1, descricao: 'Estoque Zero'},
+            {id: 2, descricao: 'Abaixo do Estoque Mínimo'},
+            {id: 3, descricao: 'Abaixo do Ponto de Pedido'},
+            {id: 4, descricao: 'Abaixo do Estoque Padrão'}
+        ];
+
+        vm.init = init;
+        vm.LoadGrupos = LoadGrupos;
+        vm.SetTipo = SetTipo;
+        vm.SetGrupo = SetGrupo;
+        vm.TemplateSetTipo = TemplateSetTipo;
+        vm.TemplateSetGrupo = TemplateSetGrupo;
+        vm.PopUpSetTipo = PopUpSetTipo;
+        vm.PopUpSetGrupo = PopUpSetGrupo;
+        vm.GerarRelatorio = GerarRelatorio;
+
+        $scope.$on('EventLogin', init());
+
+        function init() {
+            LoadGrupos();
+
+            vm.grupo = 0;
+            vm.tipo = 0;
+
+            GerarRelatorio();
+        }
+
+        function LoadGrupos() {
+            ClientAPIFactory.async('GetGrupoDeProduto').then(function (d) {
+                vm.grupos = [];
+
+                vm.grupos = d;
+                if (TratarObjetosService.ContarObjetos(vm.grupos) > 0) {
+                    vm.grupos[0].unshift({Codigo: 0, Grupo: 'Todos'});
+                }
+            });
+        }
+
+        function SetTipo() {
+            vm.data = {};
+
+            vm.data.tipo = vm.tipo;
+
+            var alertPopup = PopUpSetTipo();
+        }
+
+        function SetGrupo() {
+
+            vm.data = {};
+            vm.data.grupo = vm.grupo;
+
+            var alertPopup = PopUpSetGrupo();
+        }
+
+        function GerarRelatorio() {
+            $ionicLoading.show();
+
+            var config = {
+                grupo: vm.grupo,
+                tipo: vm.tipo
+            }
+
+            vm.relatorio = false;
+            vm.dados = [];
+
+            $q.when(config)
+                .then(function(config){
+                    var tipoConsulta = '';
+
+                    switch (config.tipo) {
+                        case 0 :
+                            tipoConsulta = 0;
+                            break;
+                        case 1 :
+                            tipoConsulta = 'EstoqueZero';
+                            break;
+                        case 2 :
+                            tipoConsulta = 'AbaixoEstoqueMinimo';
+                            break;
+                        case 3 :
+                            tipoConsulta = 'AbaixoPontoPedido';
+                            break;
+                        case 4 :
+                            tipoConsulta = 'AbaixoEstoquePadrao';
+                            break;
+                    }
+                    ClientAPIFactory.async('GetEstoque/' + config.grupo + '/' + tipoConsulta).then(function (d) {
+                        $ionicLoading.show({ template: 'Carregando Estoque'});
+
+                        vm.dados = d;
+                        if (TratarObjetosService.ContarObjetos(vm.dados[0]) > 0) {
+                            vm.relatorio = true;
+                        }
+                        $timeout(function(){
+                            $ionicLoading.hide();
+
+                            $ionicScrollDelegate.scrollTop();
+                        }, 1000);
+                    });
+
+                });
+        }
+
+        function TemplateSetTipo() {
+            var i = 0;
+            var count = vm.tipos.length;
+
+            var texto = '<ion-list>';
+            while (i < count) {
+                texto += '<ion-radio ng-model="vm.data.tipo" ng-value="' + vm.tipos[i].id + '" style="font-size: 12px;">' + vm.tipos[i].descricao + '</ion-radio>';
+                i++;
+            }
+            texto += '</ion-list>';
+            return texto;
+        }
+
+        function TemplateSetGrupo() {
+            var i = 0;
+            var count = TratarObjetosService.ContarObjetos(vm.grupos[0]);
+
+            var texto = '<ion-list>';
+            while (i < count) {
+                texto += '<ion-radio ng-model="vm.data.grupo" ng-value="' + vm.grupos[0][i].Codigo + '" style="font-size: 12px;" >' + vm.grupos[0][i].Grupo + '</ion-radio>';
+                i++;
+            }
+            texto += '</ion-list>';
+            return texto;
+        }
+
+        function PopUpSetTipo() {
+            return $ionicPopup.show({
+                template: TemplateSetTipo(),
+                title: 'Informar o Tipo de Relatório',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Gerar Relatório</b>',
+                        type: 'button-balanced',
+                        onTap: function (e) {
+                            vm.tipo = vm.data.tipo;
+                            GerarRelatorio();
+                        }
+                    }
+                ]
+            });
+        }
+
+        function PopUpSetGrupo() {
+            return $ionicPopup.show({
+                template: TemplateSetGrupo(),
+                title: 'Informar o Grupo',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Selecionar Grupo</b>',
+                        type: 'button-balanced',
+                        onTap: function (e) {
+                            vm.grupo = vm.data.grupo;
+
+                            GerarRelatorio();
+                        }
+                    }
+                ]
+            });
+        }
+    }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('sied.controllers').controller('FinanceiroCtrl', FinanceiroCtrl);
+
+    FinanceiroCtrl.$inject = ['$q', '$timeout', '$log', '$scope', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', '$cordovaClipboard', 'ClientAPIFactory', 'TratarDataService'];
+
+    function FinanceiroCtrl($q, $timeout, $log, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, $cordovaClipboard, ClientAPIFactory, TratarDataService) {
+        var vm = this;
+
+        vm.titulo = 'Financeiro';
+        vm.dados = [];
+        vm.relatorio = false;
+        vm.dataInicial = '';
+        vm.dataFinal = '';
+
+        vm.init = init;
+        vm.copiarTexto = copiarTexto;
+        vm.pegarCodigoDeBarra = pegarCodigoDeBarra;
+        vm.GerarRelatorio = GerarRelatorio;
+
+        $scope.$on('EventLogin', init());
+
+        function init() {
+            $ionicLoading.show();
+
+            vm.dataFinal = new Date();
+            $q.when(vm.dataFinal)
+                .then(function () {
+                    vm.dataInicial = TratarDataService.SubtrairDataSemFormato(1);
+                })
+                .then(function () {
+                    GerarRelatorio();
+                });
+        }
+
+        function copiarTexto(value) {
+            $cordovaClipboard.copy(value).then(function () {
+                console.log(value);
+            });
+        }
+
+        function TemplatePegarCodigoDeBarra(item) {
+            var texto = '<strong> Título: ' + item.Titulo + '<br />';
+            texto += '<strong> Fornecedor: ' + item.Fornecedor + '<br />';
+            texto += '<strong> Valor: ' + item.Valor + '<br />';
+            texto += '<strong> Vencimento: ' + item.Vencimento;
+            if (item.Barra !== '') {
+                texto += '<br /><strong>Cod.Barra: </strong>' + item.Barra.substring(0, 18);
+            }
+            return texto;
+        }
+
+        function PopUpPegarCodigoDeBarra(item) {
+            return $ionicPopup.show({
+                title: 'Copiar Código de Barra',
+                template: TemplatePegarCodigoDeBarra(item),
+                buttons: [
+                    {
+                        text: 'Sair',
+                        type: 'button-calm'
+                    },
+                    {
+                        text: 'Copiar',
+                        type: 'button-balanced',
+                        onTap: function (e) {
+                            if (e) {
+                                copiarTexto(item.Barra);
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        function pegarCodigoDeBarra(item) {
+            if (item.Titulo == '' && item.Fornecedor == '' && item.Vencimento == '') {
+                return;
+            }
+            var alertPopup = PopUpPegarCodigoDeBarra(item);
+        }
+
+        function GerarRelatorio() {
+            $ionicLoading.show();
+
+            var data = {
+                d1: TratarDataService.formatarDataAPI(vm.dataInicial),
+                d2: TratarDataService.formatarDataAPI(vm.dataFinal)
+            }
+
+            vm.dados = [];
+            ClientAPIFactory.async('GetContasAPagar/' + data.d1 + '/' + data.d2)
+                .then(function (d) {
+                    $ionicLoading.show({ template: 'Carregando Financeiro'});
+
+                    vm.dados = d;
+                })
+                .then(function () {
+                    $timeout(function () {
+                        $ionicLoading.hide();
+
+                        $ionicScrollDelegate.scrollTop();
+                    }, 1000);
+                })
+            ;
+        }
+    }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('sied.controllers')
+    .controller('InicioCtrl', InicioCtrl);
+
+  InicioCtrl.$inject = [
+    '$ionicPlatform',
+    'ClientAPIFactory',
+    '$ionicPopup',
+    '$ionicSideMenuDelegate',
+    '$rootScope',
+    '$log'
+  ];
+
+  function InicioCtrl($ionicPlatform, ClientAPIFactory, $ionicPopup, $ionicSideMenuDelegate, $rootScope, $log) {
+    var vm = this;
+
+    vm.ConfirmarSaida = ConfirmarSaida;
+    vm.toggleLeft = toggleLeft;
+    vm.init = init;
+
+    init();
+
+    $ionicPlatform.registerBackButtonAction(function (event) {
+      ConfirmarSaida();
+    }, 100);
+
+    function toggleLeft() {
+      $ionicSideMenuDelegate.toggleLeft();
+    }
+
+    function init() {
+      vm.cnpj = $rootScope.cnpj;
+    }
+
+    function ConfirmarSaida() {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Atenção',
+        template: 'Tem certeza que deseja sair do sistema?'
+      });
+
+      confirmPopup.then(function (res) {
+        if (res) {
+          ionic.Platform.exitApp();
+        }
+      });
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('sied.controllers')
+    .controller('PrincipalCtrl', PrincipalCtrl);
+
+  PrincipalCtrl.$inject = [
+    '$scope',
+    '$q',
+    '$ionicPopup',
+    '$rootScope',
+    'ServidorFactory',
+    'MenuFactory',
+    'HostFactory',
+    'ClientAPIFactory',
+    'UsuarioFactory',
+    'TratarObjetosService',
+    '$log'
+  ];
+
+  function PrincipalCtrl($scope, $q, $ionicPopup, $rootScope, ServidorFactory, MenuFactory, HostFactory, ClientAPIFactory, UsuarioFactory, TratarObjetosService, $log) {
+    var vm = this;
+
+    vm.hide = false;
+    vm.index = 0;
+    vm.selecionado = {};
+    vm.dados = {
+      usuario: '',
+      senha: ''
+    };
+    vm.mensagem = [];
+    vm.servidores = [];
+    vm.usuarios = [];
+    vm.usuario = {};
+    vm.menu = [];
+    vm.popup = '';
+    vm.checarLogin = false;
+
+    vm.dashboard = {swiper: false, slider: false, activeIndexView: 0};
+
+    vm.configurarServidor = configurarServidor;
+    vm.MudarSlide = MudarSlide;
+    vm.SelecionarUsuario = SelecionarUsuario;
+    vm.LimparMensagem = LimparMensagem;
+    vm.validarDados = validarDados;
+    vm.Voltar = Voltar;
+    vm.Sair = Sair;
+    vm.login = login;
+    vm.preLogin = preLogin;
+    vm.init = init;
+
+    function init() {
+      vm.menu = [];
+      vm.slide = [];
+
+      configurarServidor()
+        .then(function (response) {
+          if (!response) {
+            montarMenu(0).then(function (response) {
+              vm.menu = response.menu;
+              vm.slide = response.slide;
+            });
+            return;
+          }
+          vm.host = response[0];
+
+          HostFactory.setConfig(vm.host.servidor);
+
+          preLogin();
+        })
+        .catch(function (error) {
+          montarMenu(0).then(function (response) {
+            vm.menu = response.menu;
+            vm.slide = response.slide;
+          });
+        });
+    }
+
+    $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
+      if (!data || !data.slider) {
+        return;
+      }
+      vm.swiper = data.slider;
+    });
+
+    $scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
+      if (!data || !data.slider || !data.slider.snapIndex < 0) {
+        return;
+      }
+      if (!$scope.$$phase) {
+        $scope.$apply(function () {
+          vm.dashboard.activeIndexView = data.slider.snapIndex;
+        });
+      } else {
+        vm.dashboard.activeIndexView = data.slider.snapIndex;
+      }
+    });
+
+    function configurarServidor() {
+      var defer = $q.defer();
+      ServidorFactory.lastServidor().then(function (response) {
+        defer.resolve(response);
+      }, function (error) {
+        defer.reject(error);
+      });
+      return defer.promise;
+    }
+
+    function MudarSlide(index) {
+      vm.index = index;
+      vm.swiper.slideTo(index);
+    }
+
+    function montarMenu(count) {
+      var defer = $q.defer();
+      var menu = [];
+      var slide = [];
+      var total = 0;
+      var i = 0;
+      MenuFactory.montar(count).then(function (response) {
+        slide = response;
+        total = response.length;
+        menu.push({Evento: 'vm.preLogin()', Icone: 'ion-locked', Nome: 'Login', Index: '', Template: ''});
+        while (i < total) {
+          menu.push({
+            Evento: response[i].Evento,
+            Icone: response[i].Icone,
+            Nome: response[i].Nome,
+            Template: response[i].Template
+          });
+          i++;
+        }
+        menu.push({Evento: 'vm.Sair()', Icone: 'ion-power', Nome: 'Sair', Index: '', Template: ''});
+
+        defer.resolve({slide: slide, menu: menu});
+      });
+      return defer.promise;
+    }
+
+    function SelecionarUsuario() {
+      var index = vm.dados.usuario;
+
+      vm.usuario = vm.usuarios[0][index];
+
+      login();
+
+      vm.popup.close();
+    }
+
+    function validarDados() {
+      vm.mensagem = [];
+      if (vm.dados.senha == '') {
+        vm.mensagem.push('O campo Senha é obrigatório');
+      }
+
+      if (vm.dados.senha != vm.usuario.Senha) {
+        vm.mensagem.push('A senha informada é inválida');
+      }
+    }
+
+    function TemplateLogin() {
+      var tpl = '';
+
+      tpl += '<div class="item item-assertive" ng-show="vm.mensagem.length > 0">';
+      tpl += '<ul>';
+      tpl += '<li ng-repeat="item in vm.mensagem">{{ item }}</li>';
+      tpl += '</ul>';
+      tpl += '</div>';
+      tpl = '<input ng-model="vm.dados.senha" type="number" autofocus ng-change="vm.LimparMensagem()"/>'
+
+      return tpl;
+    }
+
+    function TemplatePrelogin(count) {
+      var texto = '';
+      var i = 0;
+
+      while (i < count) {
+        texto += '<ion-radio ng-model="vm.dados.usuario" ng-value="' + i + '" ng-click="vm.SelecionarUsuario()">' + vm.usuarios[0][i].Nome + '</ion-radio>';
+        i++;
+      }
+      return texto;
+    }
+
+    function PopUpLogin() {
+      vm.menu = [];
+      vm.slide = [];
+
+      return $ionicPopup.show({
+        title: 'Informe a senha',
+        template: TemplateLogin(),
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Sair',
+            type: 'button-assertive',
+            onTap: function (e) {
+              montarMenu(0).then(function (response) {
+                vm.menu = response.menu;
+                vm.slide = response.slide;
+                ionic.Platform.exitApp();
+              });
+            }
+          },
+          {
+            text: 'Voltar',
+            type: 'button-positive',
+            onTap: function (e) {
+              preLogin();
+            }
+          },
+          {
+            text: 'Entrar',
+            type: 'button-balanced',
+            onTap: function (e) {
+              validarDados();
+              if (vm.mensagem.length > 0) {
+                PopUpExibirError();
+              } else {
+                return entrar();
+              }
+            }
+          }
+        ]
+      });
+    }
+
+    function PopUpExibirError() {
+      var texto = '';
+      var i = 0;
+      texto = '<ul>';
+      while (i < vm.mensagem.length) {
+        texto += '<li>' + vm.mensagem[i] + '</li>';
+        i++;
+      }
+      texto += '</ul>';
+
+      return $ionicPopup.alert({
+        title: 'Atenção',
+        template: texto,
+        buttons: [
+          {
+            text: 'Tente Novamente',
+            type: 'button-balanced',
+            onTap: function (e) {
+              e.preventDefault();
+              return PopUpLogin();
+            }
+          }
+        ]
+      });
+    }
+
+    function entrar() {
+      validarDados();
+      if (vm.mensagem.length > 0) {
+        return;
+      }
+      UsuarioFactory.setParams(vm.usuario);
+
+      montarMenu(1).then(function (response) {
+        vm.menu = response.menu;
+        vm.slide = response.slide;
+        vm.checarLogin = true;
+
+        $scope.$emit('EventLogin', SetUsuario(vm.usuario));
+      });
+    }
+
+    function LimparMensagem() {
+      vm.mensagem = [];
+    }
+
+    function PopUpPrelogin(count) {
+      return $ionicPopup.show({
+        title: 'Selecione o usuario',
+        template: TemplatePrelogin(count),
+        scope: $scope
+      });
+    }
+
+    function preLogin() {
+      vm.menu = [];
+      vm.slide = [];
+
+      vm.checarLogin = false;
+      vm.dados.usuario = '';
+      ClientAPIFactory.asyncLogin('GetLogin')
+        .then(function (d) {
+          vm.usuarios = d;
+
+          var count = TratarObjetosService.ContarObjetos(vm.usuarios[0]);
+
+          ClientAPIFactory.async('GetRetornaCnpjDaEmpresa')
+            .then(function (response) {
+              $rootScope.cnpj = response[0];
+            });
+          vm.popup = PopUpPrelogin(count);
+        })
+        .catch(function (error) {
+          montarMenu(0).then(function (response) {
+            vm.menu = response.menu;
+            vm.slide = response.slide;
+          });
+        });
+    }
+
+    function SetUsuario(values) {
+      vm.usuario = values;
+    }
+
+    function login() {
+      vm.dados.senha = '';
+
+      var popup = PopUpLogin();
+    }
+
+    function Voltar() {
+      if ($scope.index === 0) {
+        return;
+      }
+      vm.index = $scope.index - 1;
+
+      MudarSlide($scope.index);
+    }
+
+    function Sair() {
+      ionic.Platform.exitApp();
+    }
+  }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('sied.controllers')
+        .controller('SobreCtrl', InicioCtrl);
+
+    InicioCtrl.$inject = ['$ionicPlatform', '$ionicPopup', '$ionicSideMenuDelegate']
+
+    function InicioCtrl($ionicPlatform, $ionicPopup, $ionicSideMenuDelegate) {
+        var vm = this;
+
+        vm.titulo = 'SobreNos';
+        vm.Empresa = {
+            Nome: 'Sied Sistemas',
+            Cnpj: '03.367.362/0001-03',
+            CEP: '77000-000',
+            Logradouro: '501 Sul, Av. Teotônio Segurado, Conj. 01',
+            Complemento: 'Lt. 03, Ed. Executive Center, Sala 403',
+            Bairro: 'Plano Diretor Sul',
+            Numero: 's/n',
+            Cidade: 'Palmas',
+            Estado: 'TO',
+            T_Empresa: '(63) 3322-9404',
+            T_Vendas: '',
+            T_Suporte: '(63) 98446-0444',
+            Email: 'odair@siedsistemas.com.br',
+            Site: 'siedsistemas.com.br',
+            Ano_Abertura: '1998'
+        }
+    }
+})();
+
+(function () {
+    'use strict';
+    angular.module('sied.controllers').controller('VendasCtrl', VendasCtrl);
+
+    VendasCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarDataService', 'TratarObjetosService', 'TratarFloatService'];
+
+    function VendasCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
+
+        var vm = this;
+
+        vm.ano = '';
+        vm.totalAno = 0;
+        vm.titulo = 'Relatório de Vendas';
+        vm.mostrarRodape = false;
+        vm.tipo = '';
+        vm.dataInicial = '';
+        vm.dataFinal = '';
+        vm.p1 = '';
+        vm.p2 = '';
+        vm.colors = ["rgb(159,204,0)"];
+        vm.dados = [];
+        vm.labels = [];
+        vm.series = [];
+        vm.data = [];
+        vm.tipos = [
+            {id: 1, descricao: 'Geral'},
+            // {id: 2, descricao: 'Por Produto'},
+            {id: 3, descricao: 'Por Grupo de Produtos'},
+            {id: 4, descricao: 'Por Vendedor'},
+            {id: 5, descricao: 'Gerar Gráfico Anual'}
+        ];
+        vm.detalhes = [];
+        vm.rodape = [];
+
+        vm.init = init;
+        vm.Refresh = Refresh;
+        vm.SetDataInicial = SetDataInicial;
+        vm.SetDataFinal = SetDataFinal;
+        vm.RetornarMetodo = RetornarMetodo;
+        vm.GetAno = GetAno;
+        vm.GetVenda = GetVenda;
+        vm.GerarGraficoPorAno = GerarGraficoPorAno;
+        vm.GerarRodape = GerarRodape;
+        vm.TemplateGetAno = TemplateGetAno;
+        vm.PrepararDatas = PrepararDatas;
+        vm.CalcularTotalAno = CalcularTotalAno;
+
+        $scope.$on('EventLogin', init());
+
+        function init() {
+            vm.tipo = 1;
+            var tipo = vm.tipo;
+
+            $q.when(tipo)
+                .then(function () {
+                    ClientAPIFactory.async('GetHoraPadrao')
+                        .then(function (response) {
+                            vm.p1 = response[0][0].HoraInicial;
+                            vm.p2 = response[0][0].HoraFinal;
+
+                            PrepararDatas();
+                        })
+                        .then(function () {
+                            GetVenda();
+                        });
+                });
+        }
+
+        function Refresh() {
+            vm.dados = [];
+            vm.rodape = [];
+
+            GetVenda();
+
+            $ionicScrollDelegate.scrollTop();
+        }
+
+        function SetDataInicial() {
+            if (vm.tipo === 5)
+                return;
+
+            GetVenda();
+        }
+
+        function SetDataFinal() {
+            if (vm.tipo === 5)
+                return;
+
+            GetVenda();
+        }
+
+        function RetornarMetodo(tipo) {
+            // if (tipo === 1) {
+            //     return 'GetVenda';
+            // }
+            if (tipo === 2) {
+                return 'GetVendaPorProduto';
+            }
+            if (tipo === 3) {
+                return 'GetVendaPorGrupoProduto';
+            }
+            if (tipo === 4) {
+                return 'GetVendaGraficoPorVendedor';
+            }
+            if (tipo === 5) {
+                return 'GetVendaGraficoAnual';
+            }
+        }
+
+        function GetAno() {
+            $ionicLoading.hide();
+
+            var ano = new Date();
+
+            vm.data = {};
+            vm.data.ano = ano.getFullYear();
+
+            var alertPopup = PopUpGetAno();
+        }
+
+        function PrepararRelatorioPorVendedor() {
+            if (vm.tipo == 4) {
+                var i = 0;
+                var count = TratarObjetosService.ContarObjetos(vm.dados[0]);
+                while (i < count) {
+                    vm.data[[i]] = TratarFloatService.ConverterParaFloat(vm.dados[0][i].Venda);
+                    vm.labels[i] = vm.dados[0][i].Vendedor.substring(0, 3);
+                    i++;
+                }
+            }
+            vm.detalhes = [];
+        }
+
+        function GetTotalVendaPorComanda(data) {
+            $ionicLoading.show();
+
+            vm.detalhes = [];
+
+            if (vm.tipo == 4) {
+                return;
+            }
+            ClientAPIFactory.async('GetTotalVendaPorComanda/' + data.d1 + '/' + data.d2)
+                .then(function (response) {
+                    $ionicLoading.show({template: 'Carregando Vendas Por Comanda'});
+
+                    vm.detalhes = response;
+
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                    }, 1000);
+                });
+
+            return data;
+        }
+
+        function GetVenda() {
+            $ionicLoading.show();
+
+            vm.labels = [];
+            vm.data = [];
+            vm.dados = [];
+
+            var metodo = RetornarMetodo(vm.tipo);
+
+            if (vm.tipo === 5) {
+                GetAno();
+
+                return;
+            }
+
+            var data = {
+                d1: TratarDataService.formatarDataHora(vm.dataInicial),
+                d2: TratarDataService.formatarDataHora(vm.dataFinal)
+            }
+
+            if (vm.tipo === 4) {
+                data.d1 = TratarDataService.formatarDataAPI(vm.dataInicial);
+                data.d2 = TratarDataService.formatarDataAPI(vm.dataFinal);
+
+                vm.series = ['Venda R$'];
+            }
+
+            $q.when(data)
+                .then(function(data){
+                    if (vm.tipo > 1)
+                    {
+                        ClientAPIFactory.async(metodo + '/' + data.d1 + '/' + data.d2)
+                            .then(function (d) {
+                                $ionicLoading.show({template: 'Carregando'});
+
+                                vm.dados = d;
+
+                                if (TratarObjetosService.ContarObjetos(vm.dados) > 0) {
+                                    vm.series = ['Ano'];
+
+                                    PrepararRelatorioPorVendedor();
+                                }
+
+                                $timeout(function () {
+                                    $ionicLoading.hide();
+
+                                    $ionicScrollDelegate.scrollTop();
+                                }, 1000);
+                            });
+                    }
+                    return data;
+                })
+                .then(function (data) {
+                    GetTotalVendaPorComanda(data);
+
+                    return data;
+                })
+                .then(function (data) {
+                    GerarRodape(data.d1, data.d2);
+
+                    return data;
+                })
+                .then(function () {
+                    $ionicScrollDelegate.scrollTop();
+
+                    vm.relatorio = true;
+                });
+        }
+
+        function GerarGraficoPorAno(ano) {
+            $ionicLoading.show();
+
+            vm.labels = [];
+            vm.data = [];
+            vm.detalhes = [];
+            vm.dados = [];
+
+            vm.mostrarRodape = false;
+
+            ClientAPIFactory.async('GetVendaGraficoAnual' + '/' + ano)
+                .then(function (d) {
+                    $ionicLoading.show({template: 'Gerando Gráfico'});
+
+                    vm.dados = d;
+                    if (TratarObjetosService.ContarObjetos(vm.dados[0]) > 0) {
+                        CalcularTotalAno();
+                    }
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                        $ionicScrollDelegate.scrollTop();
+                    }, 1000);
+                });
+        }
+
+        function GerarRodape(dataInicial, dataFinal) {
+            $ionicLoading.show();
+            vm.rodape = [];
+
+            if (vm.tipo == 5) {
+                return;
+            }
+
+            ClientAPIFactory.async('GetCalculaRodapeVenda' + '/' + dataInicial + '/' + dataFinal)
+                .then(function (d) {
+                    $ionicLoading.show({template: 'Calculando Relatório de Vendas'});
+
+                    vm.rodape = d;
+                    if (TratarObjetosService.ContarObjetos(vm.rodape) > 0) {
+                        vm.mostrarRodape = true;
+                    }
+
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                    }, 1000);
+                });
+        }
+
+        function TemplateGetAno() {
+            var texto = '<div class="list">';
+            texto += '<label class="item item-input">';
+            texto += '<span class="input-label">Informar o ano: </span>';
+            texto += '<input type="number" ng-model="vm.data.ano" >';
+            texto += '</label>';
+            texto += '</div>';
+            return texto;
+        }
+
+        function PopUpGetAno() {
+            return $ionicPopup.show({
+                template: TemplateGetAno(),
+                title: 'Informar o Ano',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Gerar Gráfico</b>',
+                        type: 'button-balanced',
+                        onTap: function (e) {
+                            if (!vm.data.ano) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                            } else {
+                                GerarGraficoPorAno(vm.data.ano);
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        function PrepararDatas() {
+            var t1 = vm.p1.split(':');
+            var t2 = vm.p2.split(':');
+
+            vm.dataInicial = TratarDataService.SubtrairDataSemFormato(1);
+            vm.dataInicial.setHours(t1[0]);
+            vm.dataInicial.setMinutes(t1[1]);
+            vm.dataInicial.setSeconds(t1[2]);
+
+            vm.dataFinal = new Date();
+            vm.dataFinal.setHours(t2[0]);
+            vm.dataFinal.setMinutes(t2[1]);
+            vm.dataFinal.setSeconds(t2[2]);
+        }
+
+        function CalcularTotalAno() {
+            var valor = 0;
+            var total = 0;
+            var count = TratarObjetosService.ContarObjetos(vm.dados[0]);
+            var i = 0;
+            while (i < count) {
+                vm.data[[i]] = TratarFloatService.ConverterParaFloat(vm.dados[0][i].Valor);
+                vm.labels[i] = vm.dados[0][i].Mes.substring(0, 3);
+
+                valor = TratarFloatService.ConverterParaFloat(vm.dados[0][i].Valor);
+                total = total + valor;
+                i++;
+            }
+            vm.totalAno = TratarFloatService.ConverterParaString(total.toFixed(2));
+        }
+    }
+})();

@@ -1,5 +1,8 @@
 {
-  "name": "Managing 2017",
+  "name": "managing_v1",
   "app_id": "",
-  "type": "ionic1"
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*"
+  ]
 }

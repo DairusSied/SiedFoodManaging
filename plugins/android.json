@@ -7,35 +7,23 @@
         "files": {}
     },
     "installed_plugins": {
-        "com.verso.cordova.clipboard": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
-        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
-        },
-        "cordova-plugin-dbcopy": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
-        },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.siedsistemas.siedfoodmanaging2017"
+            "PACKAGE_NAME": "sied.food.managing"
         }
     },
     "dependent_plugins": {}

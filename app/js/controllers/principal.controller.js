@@ -34,7 +34,6 @@
     vm.usuario = {};
     vm.menu = [];
     vm.popup = '';
-    vm.logado = false;
     vm.checarLogin = false;
 
     vm.dashboard = {swiper: false, slider: false, activeIndexView: 0};
@@ -199,7 +198,6 @@
               montarMenu(0).then(function (response) {
                 vm.menu = response.menu;
                 vm.slide = response.slide;
-                vm.logado = false;
                 ionic.Platform.exitApp();
               });
             }
@@ -208,7 +206,6 @@
             text: 'Voltar',
             type: 'button-positive',
             onTap: function (e) {
-              vm.logado = false;
               preLogin();
             }
           },
@@ -220,7 +217,6 @@
               if (vm.mensagem.length > 0) {
                 PopUpExibirError();
               } else {
-                vm.logado = true;
                 return entrar();
               }
             }

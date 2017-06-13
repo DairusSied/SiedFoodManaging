@@ -8,8 +8,8 @@
   <link rel="manifest" href="manifest.json">
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-  <link href="lib/slidingTabs/slidingTabs.css" rel="stylesheet">
-  <link href="lib/ion-datetime-picker/ion-datetime-picker.min.css" rel="stylesheet">
+  <!--<link href="lib/ion-slides-tabs/src/css/slidingTabs.css" rel="stylesheet">-->
+  <link href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css" rel="stylesheet">
   <link href="css/style.min.css" rel="stylesheet">
 
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -19,24 +19,28 @@
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+  <!-- cordova script (this will be a 404 during development) -->
   <script src="lib/pouchdb/dist/pouchdb.min.js"></script>
   <script src="lib/pouchdb-find/dist/pouchdb.find.min.js"></script>
   <script src="lib/ngCordova/dist/ng-cordova.js"></script>
   <script src="cordova.js"></script>
 
-  <!-- your app's js -->
-  <script src="lib/ionic-modal-select/ionic-modal-select.min.js"></script>
-  <script src="lib/slidingTabs/slidingTabsDirective.js"></script>
-  <script src="lib/ion-datetime-picker/ion-datetime-picker.min.js"></script>
-  <script src="lib/chart/dist/Chart.js"></script>
-  <script src="lib/ngStore/ngStorage.min.js"></script>
-  <script src="lib/angular-chart/dist/angular-chart.js"></script>
-  <script src="lib/angular/angular-locale_pt-br.js"></script>
+  <!-- slidingTabsDirective -->
+  <script src="lib/ion-slides-tabs/src/js/slidingTabsDirective.js"></script>
 
+  <!-- IonDateTimePicker-->
+  <script src="lib/ion-datetime-picker/release/ion-datetime-picker.min.js"></script>
+
+  <!-- Charts -->
+  <script src="lib/chart.js/dist/Chart.min.js"></script>
+  <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
+
+  <!-- Application -->
   <script src="js/dist/app.js"></script>
   <script src="js/dist/services.js"></script>
   <script src="js/dist/factories.js"></script>
   <script src="js/dist/controllers.js"></script>
+
   <style>
     ion-scroll {
       overflow: auto !important;
