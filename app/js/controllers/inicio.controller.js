@@ -6,14 +6,13 @@
 
   InicioCtrl.$inject = [
     '$ionicPlatform',
-    'ClientAPIFactory',
     '$ionicPopup',
     '$ionicSideMenuDelegate',
     '$rootScope',
     '$log'
   ];
 
-  function InicioCtrl($ionicPlatform, ClientAPIFactory, $ionicPopup, $ionicSideMenuDelegate, $rootScope, $log) {
+  function InicioCtrl($ionicPlatform, $ionicPopup, $ionicSideMenuDelegate, $rootScope, $log) {
     var vm = this;
 
     vm.ConfirmarSaida = ConfirmarSaida;

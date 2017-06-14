@@ -89,8 +89,7 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', ['sass', 'app', 'index', 'services', 'factories', 'controllers', 'css', 'tpl' ], function() {
-  gulp.watch(paths.sass, ['sass']);
+gulp.task('dist', ['app', 'index', 'services', 'factories', 'controllers', 'css', 'tpl' ], function() {
   gulp.watch(paths.app, ['app']);
   gulp.watch(paths.index, ['index']);
   gulp.watch(paths.services, ['services']);
@@ -98,6 +97,10 @@ gulp.task('watch', ['sass', 'app', 'index', 'services', 'factories', 'controller
   gulp.watch(paths.controllers, ['controllers']);
   gulp.watch(paths.css, ['css']);
   gulp.watch(paths.tpl, ['tpl']);
+});
+
+gulp.task('watch', ['sass'], function() {
+  gulp.watch(paths.sass, ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {

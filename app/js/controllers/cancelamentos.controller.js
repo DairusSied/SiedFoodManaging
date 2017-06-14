@@ -136,11 +136,11 @@
         buttons: [
           {
             text: 'Não',
-            type: 'button-calm',
+            type: 'button-light',
           },
           {
             text: '<b>Sim</b>',
-            type: 'button-assertive',
+            type: 'button-light',
             onTap: function (e) {
               if (e) {
                 vm.item = item;

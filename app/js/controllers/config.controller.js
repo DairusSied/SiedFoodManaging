@@ -175,11 +175,11 @@
         buttons: [
           {
             text: 'Não',
-            type: 'button-calm'
+            type: 'button-light'
           },
           {
             text: 'Sim',
-            type: 'button-assertive',
+            type: 'button-light',
             onTap: function (e) {
               excluir();
             }
@@ -196,11 +196,11 @@
         buttons: [
           {
             text: 'Cancelar',
-            type: 'button-calm'
+            type: 'button-light'
           },
           {
             text: 'Salvar',
-            type: 'button-positive',
+            type: 'button-light',
             onTap: function (e) {
               validarDados();
               if (vm.mensagem.length > 0) {

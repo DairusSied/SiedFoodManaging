@@ -7,7 +7,8 @@
     function VendasCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarDataService, TratarObjetosService, TratarFloatService) {
 
         var vm = this;
-
+        vm.showFooter = false;
+        vm.contentFooter = 'Teste';
         vm.ano = '';
         vm.totalAno = 0;
         vm.titulo = 'Relatório de Vendas';
@@ -288,7 +289,7 @@
                 buttons: [
                     {
                         text: '<b>Gerar Gráfico</b>',
-                        type: 'button-balanced',
+                        type: 'button-light',
                         onTap: function (e) {
                             if (!vm.data.ano) {
                                 //don't allow the user to close unless he enters wifi password

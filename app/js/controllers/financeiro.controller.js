@@ -58,11 +58,11 @@
                 buttons: [
                     {
                         text: 'Sair',
-                        type: 'button-calm'
+                        type: 'button-light'
                     },
                     {
                         text: 'Copiar',
-                        type: 'button-balanced',
+                        type: 'button-light',
                         onTap: function (e) {
                             if (e) {
                                 copiarTexto(item.Barra);

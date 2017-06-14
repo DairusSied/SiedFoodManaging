@@ -21,6 +21,8 @@
   function PrincipalCtrl($scope, $q, $ionicPopup, $rootScope, ServidorFactory, MenuFactory, HostFactory, ClientAPIFactory, UsuarioFactory, TratarObjetosService, $log) {
     var vm = this;
 
+    $rootScope.showFooter = false;
+
     vm.hide = false;
     vm.index = 0;
     vm.selecionado = {};
@@ -41,8 +43,6 @@
     vm.configurarServidor = configurarServidor;
     vm.MudarSlide = MudarSlide;
     vm.SelecionarUsuario = SelecionarUsuario;
-    vm.LimparMensagem = LimparMensagem;
-    vm.validarDados = validarDados;
     vm.Voltar = Voltar;
     vm.Sair = Sair;
     vm.login = login;
@@ -147,26 +147,15 @@
       vm.popup.close();
     }
 
-    function validarDados() {
-      vm.mensagem = [];
-      if (vm.dados.senha == '') {
-        vm.mensagem.push('O campo Senha é obrigatório');
-      }
-
-      if (vm.dados.senha != vm.usuario.Senha) {
-        vm.mensagem.push('A senha informada é inválida');
-      }
-    }
-
     function TemplateLogin() {
       var tpl = '';
 
-      tpl += '<div class="item item-assertive" ng-show="vm.mensagem.length > 0">';
+      tpl += '<div class="item item-assertive mb" ng-show="vm.mensagem.length>0">';
       tpl += '<ul>';
       tpl += '<li ng-repeat="item in vm.mensagem">{{ item }}</li>';
       tpl += '</ul>';
       tpl += '</div>';
-      tpl = '<input ng-model="vm.dados.senha" type="number" autofocus ng-change="vm.LimparMensagem()"/>'
+      tpl += '<input ng-model="vm.dados.senha" type="number" autofocus ng-change="vm.mensagem=[]"/>'
 
       return tpl;
     }
@@ -193,7 +182,7 @@
         buttons: [
           {
             text: 'Sair',
-            type: 'button-assertive',
+            type: 'button-light',
             onTap: function (e) {
               montarMenu(0).then(function (response) {
                 vm.menu = response.menu;
@@ -204,58 +193,35 @@
           },
           {
             text: 'Voltar',
-            type: 'button-positive',
+            type: 'button-light',
             onTap: function (e) {
               preLogin();
             }
           },
           {
             text: 'Entrar',
-            type: 'button-balanced',
+            type: 'button-light',
             onTap: function (e) {
-              validarDados();
-              if (vm.mensagem.length > 0) {
-                PopUpExibirError();
-              } else {
-                return entrar();
+              if (vm.dados.senha == '') {
+                vm.mensagem.push('A Senha é obrigatório');
               }
+              if (vm.dados.senha != vm.usuario.Senha) {
+                vm.mensagem.push('Senha inválida');
+              }
+              if (vm.mensagem.length > 0) {
+                e.preventDefault();
+                return;
+              }
+              entrar();
             }
           }
         ]
       });
     }
 
-    function PopUpExibirError() {
-      var texto = '';
-      var i = 0;
-      texto = '<ul>';
-      while (i < vm.mensagem.length) {
-        texto += '<li>' + vm.mensagem[i] + '</li>';
-        i++;
-      }
-      texto += '</ul>';
 
-      return $ionicPopup.alert({
-        title: 'Atenção',
-        template: texto,
-        buttons: [
-          {
-            text: 'Tente Novamente',
-            type: 'button-balanced',
-            onTap: function (e) {
-              e.preventDefault();
-              return PopUpLogin();
-            }
-          }
-        ]
-      });
-    }
 
     function entrar() {
-      validarDados();
-      if (vm.mensagem.length > 0) {
-        return;
-      }
       UsuarioFactory.setParams(vm.usuario);
 
       montarMenu(1).then(function (response) {
@@ -265,10 +231,6 @@
 
         $scope.$emit('EventLogin', SetUsuario(vm.usuario));
       });
-    }
-
-    function LimparMensagem() {
-      vm.mensagem = [];
     }
 
     function PopUpPrelogin(count) {

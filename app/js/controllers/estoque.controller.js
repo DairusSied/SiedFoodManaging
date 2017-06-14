@@ -153,7 +153,7 @@
                 buttons: [
                     {
                         text: '<b>Gerar Relatório</b>',
-                        type: 'button-balanced',
+                        type: 'button-light',
                         onTap: function (e) {
                             vm.tipo = vm.data.tipo;
                             GerarRelatorio();
@@ -171,7 +171,7 @@
                 buttons: [
                     {
                         text: '<b>Selecionar Grupo</b>',
-                        type: 'button-balanced',
+                        type: 'button-light',
                         onTap: function (e) {
                             vm.grupo = vm.data.grupo;
 

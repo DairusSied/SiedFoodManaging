@@ -1,44 +1,44 @@
 <div ng-controller="SobreCtrl as vm">
-    <ion-content class="has-footer">
-        <div class="padding">
-            <div class="card">
-                <div class="logo mt">
-                    <center><img src="img/LogoWeb.png" alt=""></center>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <center>
-                            <h3>{{ vm.Empresa.Nome }}</h3>
-                            <span>Site: {{ vm.Empresa.Site }}</span> <br>
-                            <span>CNPJ: {{ vm.Empresa.Cnpj }}</span> <br>
-                            <span>Desde {{ vm.Empresa.Ano_Abertura }} no mercado</span>
-                        </center>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <ion-list>
-                    <ion-item class="item item-balanced">
-                        <strong><i class="ion-ios-location"></i> Endereço</strong>
-                    </ion-item>
-                    <ion-item>
-                        {{ vm.Empresa.Logradouro}} <br>
-                        {{ vm.Empresa.Complemento}} <br>
-                        {{ vm.Empresa.Bairro}} <br>
-                        CEP: {{ vm.Empresa.CEP }} <br>
-                        Número: {{ vm.Empresa.Numero}} <br>
-                        {{ vm.Empresa.Cidade }}/{{ vm.Empresa.Estado }}
-                    </ion-item>
-                    <ion-item class="item item-balanced">
-                        <strong><i class="ion-ios-telephone"></i> Contatos</strong>
-                    </ion-item>
-                    <ion-item>
-                        Empresa: {{ vm.Empresa.T_Empresa }} <br>
-                        Suporte: {{ vm.Empresa.T_Suporte }} <br>
-                        E-mail: {{ vm.Empresa.Email }}
-                    </ion-item>
-                </ion-list>
-            </div>
+  <ion-content class="has-footer">
+    <div class="padding">
+      <div class="card">
+        <div class="logo mt">
+          <center><img src="img/LogoWeb.png" alt=""></center>
         </div>
-    </ion-content>
+        <div class="row">
+          <div class="col">
+            <center>
+              <h3>{{ vm.Empresa.Nome }}</h3>
+              <span>Site: {{ vm.Empresa.Site }}</span> <br>
+              <span>CNPJ: {{ vm.Empresa.Cnpj }}</span> <br>
+              <span>Desde {{ vm.Empresa.Ano_Abertura }} no mercado</span>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <ion-list>
+          <ion-item class="item item-divider">
+            <strong><i class="ion-ios-location"></i> Endereço</strong>
+          </ion-item>
+          <ion-item>
+            {{ vm.Empresa.Logradouro}} <br>
+            {{ vm.Empresa.Complemento}} <br>
+            {{ vm.Empresa.Bairro}} <br>
+            CEP: {{ vm.Empresa.CEP }} <br>
+            Número: {{ vm.Empresa.Numero}} <br>
+            {{ vm.Empresa.Cidade }}/{{ vm.Empresa.Estado }}
+          </ion-item>
+          <ion-item class="item item-divider">
+            <strong><i class="ion-ios-telephone"></i> Contatos</strong>
+          </ion-item>
+          <ion-item>
+            Empresa: {{ vm.Empresa.T_Empresa }} <br>
+            Suporte: {{ vm.Empresa.T_Suporte }} <br>
+            E-mail: {{ vm.Empresa.Email }}
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
 </div>

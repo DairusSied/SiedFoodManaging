@@ -13,7 +13,8 @@
     'ClientAPIFactory',
     'TratarDataService',
     'TratarObjetosService',
-    'TratarFloatService'
+    'TratarFloatService',
+    '$log'
   ];
 
   function CaixaCtrl($q,
@@ -25,7 +26,8 @@
                      ClientAPIFactory,
                      TratarDataService,
                      TratarObjetosService,
-                     TratarFloatService) {
+                     TratarFloatService,
+                     $log) {
     var vm = this;
 
     vm.listagem = true;
@@ -52,6 +54,8 @@
     $scope.$on('EventLogin', init());
 
     function init() {
+      $log.info('caixa');
+
       vm.dias = 1;
 
       GetTurno();
@@ -202,7 +206,7 @@
         buttons: [
           {
             text: '<b>Processar Relatório</b>',
-            type: 'button-balanced',
+            type: 'button-light',
             onTap: function (e) {
               if (!vm.data.dias) {
                 //don't allow the user to close unless he enters wifi password

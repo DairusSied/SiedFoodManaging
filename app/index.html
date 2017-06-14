@@ -7,8 +7,7 @@
 
   <link rel="manifest" href="manifest.json">
 
-  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-  <!--<link href="lib/ion-slides-tabs/src/css/slidingTabs.css" rel="stylesheet">-->
+  <link href="css/ionic.app.css" rel="stylesheet">
   <link href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css" rel="stylesheet">
   <link href="css/style.min.css" rel="stylesheet">
 
@@ -49,18 +48,20 @@
 </head>
 <body ng-app="sied" animation="slide-left-right" ng-controller="PrincipalCtrl as vm">
 <ion-side-menus enable-menu-with-back-views="true">
-  <ion-side-menu side="right" >
+  <ion-side-menu side="right">
     <ion-header-bar class="bar-balanced">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-repeat="item in vm.menu" ng-click="{{ item.Evento }}"><i class="{{ item.Icone }}"></i>&nbsp;&nbsp;&nbsp;{{ item.Nome }}</ion-item>
+        <ion-item menu-close ng-repeat="item in vm.menu" ng-click="{{ item.Evento }}">
+          <i class="{{ item.Icone }}"></i>&nbsp;&nbsp;&nbsp;{{ item.Nome }}
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
 
-  <ion-side-menu-content>
+  <ion-side-menu-content class="has-footer">
     <ion-nav-bar class="bar-balanced">
       <ion-nav-back-button>
         <button class="button button-icon button-clear">
