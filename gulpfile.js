@@ -23,7 +23,7 @@ var paths = {
 
 gulp.task('app', function (done) {
   gulp.src(paths.app)
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
@@ -37,7 +37,7 @@ gulp.task('index', function (done) {
 gulp.task('factories', function (done) {
   gulp.src(paths.factories)
     .pipe(concat('factories.js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
@@ -45,7 +45,7 @@ gulp.task('factories', function (done) {
 gulp.task('controllers', function (done) {
   gulp.src(paths.controllers)
     .pipe(concat('controllers.js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
@@ -53,7 +53,7 @@ gulp.task('controllers', function (done) {
 gulp.task('services', function (done) {
   gulp.src(paths.services)
     .pipe(concat('services.js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
