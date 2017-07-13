@@ -1,51 +1,52 @@
 <div ng-controller="ConsumoCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider tabs-left">
-      <a class="tab-item" ng-click="vm.GerarRelatorio()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-    </div>
-    <div class="padding">
-      <div ng-show="!vm.caixa[0].length && !vm.dados[0].length && !vm.rodape[0].length">
-        <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
+        <div ng-show="!vm.caixa[0].length && !vm.dados[0].length && !vm.rodape[0].length">
           <div class="card">
             <ion-list>
               <ion-item class="item assertive">Nenhum registro encontrado</ion-item>
             </ion-list>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="mt30">
-      <div class="row">
-        <div class="col col-50" ng-hide="!vm.caixa[0].length">
-          <div class="card">
-            <ion-list>
-              <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
-                Valores em Caixa
-              </ion-item>
-              <ion-item class="consumo_item" ng-repeat="item in vm.caixa[0]" ng-class="{'item-divider' : $last }">
-                <p class="titulo">{{ item.TIPO }}</p>
-                <p class="consumo_valor" ng-class="{'consumo_total' : $last }">{{ item.VALOR}}</p>
-              </ion-item>
-            </ion-list>
+        <div class="row" style="padding: 0px; margin-top: 0px;">
+          <div class="col col-50" ng-hide="!vm.caixa[0].length">
+            <div class="card">
+              <ion-list>
+                <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
+                  Valores em Caixa
+                </ion-item>
+                <ion-item class="consumo_item" ng-repeat="item in vm.caixa[0]" ng-class="{'item-divider' : $last }">
+                  <p class="titulo">{{ item.TIPO }}</p>
+                  <p class="consumo_valor" ng-class="{'consumo_total' : $last }">{{ item.VALOR}}</p>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+          <div class="col col-50" ng-hide="!vm.consumo[0].length">
+            <div class="card">
+              <ion-list>
+                <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
+                  Vendas em Consumo
+                </ion-item>
+                <ion-item class="consumo_item" ng-repeat="item in vm.consumo[0]" ng-class="{'item-divider' : $last }">
+                  <p class="titulo">{{ item.TIPO }}</p>
+                  <p class="consumo_valor" ng-class="{'consumo_total' : $last }" style="color: white">{{
+                    item.VALOR}}</p>
+                </ion-item>
+              </ion-list>
+            </div>
           </div>
         </div>
-        <div class="col col-50" ng-hide="!vm.consumo[0].length">
-          <div class="card">
-            <ion-list>
-              <ion-item class="item item-divider" style="font-size: 13px; text-align: center">
-                Vendas em Consumo
-              </ion-item>
-              <ion-item class="consumo_item" ng-repeat="item in vm.consumo[0]" ng-class="{'item-divider' : $last }">
-                <p class="titulo">{{ item.TIPO }}</p>
-                <p class="consumo_valor" ng-class="{'consumo_total' : $last }" style="color: white">{{ item.VALOR}}</p>
-              </ion-item>
-            </ion-list>
-          </div>
-        </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider tabs-left">
+        <a class="tab-item" ng-click="vm.GerarRelatorio()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

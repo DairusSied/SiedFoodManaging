@@ -1,17 +1,7 @@
 <div ng-controller="ComprasCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider tabs-left">
-      <a class="tab-item" ng-show="vm.relatorio" ng-click="vm.CarregarItemsEmMovimento()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-      <a class="tab-item" ng-hide="!vm.cabecalho[0].length" ng-click="vm.Voltar()">
-        <i class="icon ion-ios-arrow-back"></i>
-        Voltar
-      </a>
-    </div>
-    <div class="padding">
-      <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
         <div class="card mb" ng-hide="vm.relatorio">
           <ion-list>
             <ion-item class="item item-divider">
@@ -107,7 +97,19 @@
             </ion-list>
           </div>
         </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider tabs-left">
+        <a class="tab-item" ng-show="vm.relatorio" ng-click="vm.CarregarItemsEmMovimento()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
+        <a class="tab-item" ng-hide="!vm.cabecalho[0].length" ng-click="vm.Voltar()">
+          <i class="icon ion-ios-arrow-back"></i>
+          Voltar
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

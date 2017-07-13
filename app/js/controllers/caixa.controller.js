@@ -54,10 +54,7 @@
     $scope.$on('EventLogin', init());
 
     function init() {
-      $log.info('caixa');
-
       vm.dias = 1;
-
       GetTurno();
     }
 

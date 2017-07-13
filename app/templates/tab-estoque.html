@@ -1,21 +1,7 @@
 <div ng-controller="EstoqueCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider">
-      <a class="tab-item" ng-click="vm.GerarRelatorio()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-      <a class="tab-item" ng-click="vm.SetGrupo()">
-        <i class="icon ion-funnel"></i>
-        Grupo
-      </a>
-      <a class="tab-item" ng-click="vm.SetTipo()">
-        <i class="icon ion-clipboard"></i>
-        Tipo de Relatório
-      </a>
-    </div>
-    <div class="padding">
-      <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
         <div class="card">
           <ion-list ng-show="!vm.dados[0].length">
             <ion-item class="item assertive">
@@ -41,7 +27,23 @@
             </ion-item>
           </ion-list>
         </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider">
+        <a class="tab-item" ng-click="vm.GerarRelatorio()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
+        <a class="tab-item" ng-click="vm.SetGrupo()">
+          <i class="icon ion-ios-browsers-outline"></i>
+          Grupo
+        </a>
+        <a class="tab-item" ng-click="vm.SetTipo()">
+          <i class="icon ion-clipboard"></i>
+          Tipo de Relatório
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

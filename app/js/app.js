@@ -7,12 +7,20 @@
 
   function runApp($ionicPlatform, $ionicPickerI18n) {
     $ionicPlatform.ready(function () {
-      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        cordova.plugins.Keyboard.disableScroll(true);
-      }
+      // if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+      //   cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      //   cordova.plugins.Keyboard.disableScroll(true);
+      // }
       if (window.StatusBar) {
         StatusBar.styleDefault();
+      }
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+      cordova.plugins.Keyboard.disableScroll(true);
+
+      window.addEventListener('native.keyboardhide', keyboardHideHandler);
+
+      function keyboardHideHandler(e){
+        alert('Goodnight, sweet prince');
       }
 
       $ionicPickerI18n.weekdays = ["DO", "SE", "TE", "QA", "QI", "SE", "SA"];
@@ -36,6 +44,11 @@
         url: '/inicio',
         templateUrl: 'templates/tab-index.html',
         controller: 'PrincipalCtrl'
+      })
+      .state('caixa', {
+        url: "/caixa",
+        templateUrl: "templates/tab-caixa.html",
+        controller: 'CaixaCtrl'
       });
 
     ChartJsProvider.setOptions({colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']});

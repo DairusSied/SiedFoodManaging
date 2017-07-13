@@ -1,22 +1,12 @@
 <div ng-controller="CancelamentosCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider tabs-left">
-      <a class="tab-item" ng-show="vm.relatorio" ng-click="vm.CarregarItemsEmMovimento()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-      <a class="tab-item" ng-hide="vm.relatorio" ng-click="vm.Voltar()">
-        <i class="icon ion-ios-arrow-back"></i>
-        Voltar
-      </a>
-    </div>
-    <div class="padding" ng-hide="vm.mesas[0].length > 0 || vm.cartoes[0].length > 0">
-      <ion-list>
-        <ion-item class="item assertive">Não existe item para cancelamento</ion-item>
-      </ion-list>
-    </div>
-    <div class="padding">
-      <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
+        <div ng-hide="vm.mesas[0].length > 0 || vm.cartoes[0].length > 0">
+          <ion-list>
+            <ion-item class="item assertive">Não existe item para cancelamento</ion-item>
+          </ion-list>
+        </div>
         <div ng-show="vm.relatorio">
           <div class="card" ng-show="vm.mesas[0].length > 0">
             <ion-list>
@@ -136,7 +126,19 @@
             </ion-list>
           </div>
         </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider tabs-left">
+        <a class="tab-item" ng-show="vm.relatorio" ng-click="vm.CarregarItemsEmMovimento()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
+        <a class="tab-item" ng-hide="vm.relatorio" ng-click="vm.Voltar()">
+          <i class="icon ion-ios-arrow-back"></i>
+          Voltar
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

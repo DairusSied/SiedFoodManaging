@@ -1,23 +1,7 @@
 <div ng-controller="FinanceiroCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider">
-      <a class="tab-item" ng-click="vm.GerarRelatorio()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-      <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
-         ng-click="vm.GerarRelatorio()">
-        <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
-        Data Inicial
-      </a>
-      <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataFinal"
-         ng-click="vm.GerarRelatorio()">
-        <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
-        Data Final
-      </a>
-    </div>
-    <div class="padding">
-      <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
         <div class="card">
           <ion-list ng-hide="vm.dados[0].length > 0">
             <ion-item class="item assertive">Não existem título a pagar nesse período</ion-item>
@@ -30,8 +14,7 @@
                 <div class="col" style="text-align: right !important; padding: 0px 5px;">Valor</div>
               </div>
             </ion-item>
-            <ion-item ng-repeat="item in vm.dados[0]" ng-click="vm.pegarCodigoDeBarra(item)"
-                      ng-hide="!vm.dados[0].length" style="font-size: 14px; padding: 1px 0px;">
+            <ion-item ng-repeat="item in vm.dados[0]" ng-click="vm.pegarCodigoDeBarra(item)" ng-hide="!vm.dados[0].length" style="font-size: 14px; padding: 1px 0px;">
               <div class="row">
                 <div ng-if="$last">
                   <div class="col destaque-celula" style="text-align: left !important; padding: 0px 5px;">
@@ -51,7 +34,25 @@
             </ion-item>
           </ion-list>
         </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider">
+        <a class="tab-item" ng-click="vm.GerarRelatorio()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
+        <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
+           ng-click="vm.GerarRelatorio()">
+          <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
+          Data Inicial
+        </a>
+        <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataFinal"
+           ng-click="vm.GerarRelatorio()">
+          <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
+          Data Final
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

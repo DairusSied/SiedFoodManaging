@@ -1,23 +1,7 @@
 <div ng-controller="CouvertCtrl as vm">
   <ion-content class="has-footer">
-    <div class="tabs tabs-icon-top tab-divider">
-      <a class="tab-item" ng-click="vm.GerarCouvert()">
-        <i class="icon ion-android-refresh"></i>
-        Atualizar
-      </a>
-      <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
-         ng-click="vm.GerarCouvert()">
-        <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
-        Data Inicial
-      </a>
-      <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataFinal"
-         ng-click="vm.GerarCouvert()">
-        <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
-        Data Final
-      </a>
-    </div>
-    <div class="padding">
-      <div class="mt50">
+    <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <ion-scroll direction="y">
         <div class="card">
           <ion-list ng-hide="vm.fechados[0].length">
             <ion-item class="assertive">Não existe couvert fechado</ion-item>
@@ -95,7 +79,25 @@
             </ion-item>
           </ion-list>
         </div>
+      </ion-scroll>
+    </ion-pane>
+    <ion-footer-bar class="footer-bottom">
+      <div class="tabs tabs-icon-top tab-divider">
+        <a class="tab-item" ng-click="vm.GerarCouvert()">
+          <i class="icon ion-android-refresh"></i>
+          Atualizar
+        </a>
+        <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataInicial"
+           ng-click="vm.GerarCouvert()">
+          <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
+          Data Inicial
+        </a>
+        <a class="tab-item" ion-datetime-picker title="'Selecine a Data Inicial'" ng-model="vm.dataFinal"
+           ng-click="vm.GerarCouvert()">
+          <i class="icon ion-ios-calendar-outline ion-ios-calendar-outline"></i>
+          Data Final
+        </a>
       </div>
-    </div>
+    </ion-footer-bar>
   </ion-content>
 </div>

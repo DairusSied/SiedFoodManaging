@@ -49,6 +49,8 @@
     vm.preLogin = preLogin;
     vm.init = init;
 
+    vm.pagina = 0;
+
     function init() {
       vm.menu = [];
       vm.slide = [];
@@ -81,12 +83,14 @@
         return;
       }
       vm.swiper = data.slider;
+      vm.teste = data.slider;
     });
 
     $scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
       if (!data || !data.slider || !data.slider.snapIndex < 0) {
         return;
       }
+      vm.pagina = data.slider.snapIndex;
       if (!$scope.$$phase) {
         $scope.$apply(function () {
           vm.dashboard.activeIndexView = data.slider.snapIndex;
@@ -218,8 +222,6 @@
         ]
       });
     }
-
-
 
     function entrar() {
       UsuarioFactory.setParams(vm.usuario);

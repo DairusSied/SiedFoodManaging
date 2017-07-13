@@ -3,9 +3,9 @@
 
     angular.module('sied.controllers').controller('EstoqueCtrl', EstoqueCtrl);
 
-    EstoqueCtrl.$inject = ['$q', '$timeout', '$ionicLoading', '$scope', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarObjetosService'];
+    EstoqueCtrl.$inject = ['$q', '$log', '$timeout', '$ionicLoading', '$scope', '$ionicPopup', '$ionicScrollDelegate', 'ClientAPIFactory', 'TratarObjetosService'];
 
-    function EstoqueCtrl($q, $timeout, $ionicLoading, $scope, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarObjetosService) {
+    function EstoqueCtrl($q, $log, $timeout, $ionicLoading, $scope, $ionicPopup, $ionicScrollDelegate, ClientAPIFactory, TratarObjetosService) {
         var vm = this;
 
         vm.titulo = 'Controle de Estoque';
@@ -56,9 +56,7 @@
 
         function SetTipo() {
             vm.data = {};
-
             vm.data.tipo = vm.tipo;
-
             var alertPopup = PopUpSetTipo();
         }
 
@@ -162,7 +160,6 @@
                 ]
             });
         }
-
         function PopUpSetGrupo() {
             return $ionicPopup.show({
                 template: TemplateSetGrupo(),
