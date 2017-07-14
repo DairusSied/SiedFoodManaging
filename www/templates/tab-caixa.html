@@ -1,181 +1,165 @@
 <div ng-controller="CaixaCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div class="padding">
-          <div ng-show="vm.listagem">
-            <div class="card" ng-hide="vm.dados[0].length > 0">
-              <ion-item class="item assertive">
-                Não existe turno neste período
-              </ion-item>
+      <div class="card">
+        <ion-list ng-hide="vm.dados[0].length > 0">
+          <ion-item class="item assertive">
+            Não existe turno neste período
+          </ion-item>
+        </ion-list>
+        <ion-scroll direction="y">
+          <ion-list ng-show="(vm.listagem && vm.dados[0].length > 0)">
+            <ion-item class="item item-divider">
+              Turnos do Período
+            </ion-item>
+            <ion-item ng-repeat="item in vm.dados[0]" ng-click="vm.GerarRelatorio(item)">
+              <h2>{{ item.NOME }}</h2>
+              <table class="tabela mt">
+                <tr style="border-bottom: none;">
+                  <td align="left" style="padding: 0px;">{{ item.DATA_ABERTURA }} à {{ item.DATA_FECHAMENTO }}</td>
+                  <td align="right" style="padding: 0px;" class='destaque-texto'>
+                    <div ng-class="{'aberto':item.STATUS == 'Fechado'}">{{ item.STATUS }}</div>
+                  </td>
+                </tr>
+              </table>
+              <span class="badge">{{ item.TURNO }}</span>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.caixa[0].length">
+            <ion-item class="item item-divider">
+              <h2>{{ vm.caixa.NOME }}</h2>
+              <table class="tabela">
+                <tr style="border-bottom: none;">
+                  <td align="left" style="padding: 0px;">{{ vm.caixa.DATA_ABERTURA }} à {{ vm.caixa.DATA_FECHAMENTO }}
+                  </td>
+                  <td align="right" style="padding: 0px;" class='destaque-texto'>
+                    <div ng-class="{'aberto':vm.caixa.STATUS == 'Fechado'}">{{ vm.caixa.STATUS }}</div>
+                  </td>
+                </tr>
+              </table>
+              <span class="badge">{{ vm.caixa.TURNO }}</span>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.movimento[0].length">
+            <div class="item item-divider">
+              Movimento do Turno
             </div>
-            <div class="card" ng-show="vm.dados[0].length > 0">
-              <ion-list>
-                <ion-item class="item item-divider">
-                  Turnos do Período
-                </ion-item>
-                <ion-item ng-repeat="item in vm.dados[0]" ng-click="vm.GerarRelatorio(item)">
-                  <h2>{{ item.NOME }}</h2>
-                  <table class="tabela mt">
-                    <tr style="border-bottom: none;">
-                      <td align="left" style="padding: 0px;">{{ item.DATA_ABERTURA }} à {{ item.DATA_FECHAMENTO }}</td>
-                      <td align="right" style="padding: 0px;" class='destaque-texto'>
-                        <div ng-class="{'aberto':item.STATUS == 'Fechado'}">{{ item.STATUS }}</div>
-                      </td>
-                    </tr>
-                  </table>
-                  <span class="badge">{{ item.TURNO }}</span>
-                </ion-item>
-              </ion-list>
+            <ion-item class="item-padding">
+              <table class="tabela">
+                <tr>
+                  <td class="destaque-celula" width="10%">Dia</td>
+                  <td class="destaque-celula" width="15%" align="center">Venda</td>
+                  <td class="destaque-celula" width="40%">Descricao</td>
+                  <td class="destaque-celula" width="25%" align="right">Valor</td>
+                  <td class="destaque-celula" width="10%" align="center">Tipo</td>
+                </tr>
+                <tr ng-repeat="item in vm.movimento[0]">
+                  <td>{{ item.DATA | limitTo:2 }}</td>
+                  <td align="center">{{ item.VENDA }}</td>
+                  <td>{{ item.DESCRICAO | limitTo:10 }}</td>
+                  <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="right">{{ item.VALOR }}</td>
+                  <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="center">{{ item.TIPO }}</td>
+                </tr>
+              </table>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.resumoVendas[0].length">
+            <div class="item item-divider">
+              Resumo das Vendas
             </div>
-          </div>
-          <div class="card mb" ng-hide="!vm.caixa[0].length">
-            <ion-list>
-              <ion-item class="item item-divider">
-                <h2>{{ vm.caixa.NOME }}</h2>
-                <table class="tabela">
-                  <tr style="border-bottom: none;">
-                    <td align="left" style="padding: 0px;">{{ vm.caixa.DATA_ABERTURA }} à {{ vm.caixa.DATA_FECHAMENTO }}
-                    </td>
-                    <td align="right" style="padding: 0px;" class='destaque-texto'>
-                      <div ng-class="{'aberto':vm.caixa.STATUS == 'Fechado'}">{{ vm.caixa.STATUS }}</div>
-                    </td>
-                  </tr>
-                </table>
-                <span class="badge">{{ vm.caixa.TURNO }}</span>
-              </ion-item>
-            </ion-list>
-          </div>
-          <div class="card mb" ng-hide="!vm.movimento[0].length">
-            <ion-list>
-              <div class="item item-divider">
-                Movimento do Turno
-              </div>
-              <ion-item class="item-padding">
-                <table class="tabela">
-                  <tr>
-                    <td class="destaque-celula" width="10%">Dia</td>
-                    <td class="destaque-celula" width="15%" align="center">Venda</td>
-                    <td class="destaque-celula" width="40%">Descricao</td>
-                    <td class="destaque-celula" width="25%" align="right">Valor</td>
-                    <td class="destaque-celula" width="10%" align="center">Tipo</td>
-                  </tr>
-                  <tr ng-repeat="item in vm.movimento[0]">
-                    <td>{{ item.DATA | limitTo:2 }}</td>
-                    <td align="center">{{ item.VENDA }}</td>
-                    <td>{{ item.DESCRICAO | limitTo:10 }}</td>
-                    <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="right">{{ item.VALOR }}</td>
-                    <td ng-class="{'destaque-texto': item.TIPO == 'D'}" align="center">{{ item.TIPO }}</td>
-                  </tr>
-                </table>
-              </ion-item>
-            </ion-list>
-          </div>
-          <div class="card mb" ng-hide="!vm.resumoVendas[0].length">
-            <ion-list>
-              <div class="item item-divider">
-                Resumo das Vendas
-              </div>
-              <ion-item class="item-padding" type="item-text-wrap">
-                <table class="tabela">
-                  <tr>
-                    <td class="destaque-celula" width="50%" align="left">Tipo</td>
-                    <td class="destaque-celula" width="50%" align="right">Valor</td>
-                  </tr>
-                  <tr ng-repeat="item in vm.resumoVendas[0]">
-                    <td ng-class="{'destaque-celula':$last}" align="left">{{ item.TIPO }}</td>
-                    <td ng-class="{'destaque-celula':$last}" align="right">{{ item.VALOR }}</td>
-                  </tr>
-                </table>
-              </ion-item>
-            </ion-list>
-          </div>
-          <div class="card mb" ng-hide="!vm.resumoMovimento[0].length">
-            <ion-list>
-              <div class="item item-divider">
-                Resumo do Movimento
-              </div>
-              <ion-item class="item-padding" type="item-text-wrap">
-                <table class="tabela">
-                  <tr>
-                    <td class="destaque-celula" width="40%" align="left">Tipo</td>
-                    <td class="destaque-celula" width="30%" align="right">Entrada</td>
-                    <td class="destaque-celula" width="30%" align="right">Saída</td>
-                  </tr>
-                  <tr ng-repeat="item in vm.resumoMovimento[0]">
-                    <td ng-class="{'destaque-celula':$last}" align="left">{{ item.TIPO }}</td>
-                    <td ng-class="{'destaque-celula':$last}" align="right">{{ item.ENTRADA }}</td>
-                    <td ng-class="{'destaque-celula':$last}" align="right">{{ item.SAIDA }}</td>
-                  </tr>
-                </table>
-              </ion-item>
-            </ion-list>
-          </div>
-          <div class="card mb" ng-hide="!vm.balancete[0].length">
-            <ion-list>
-              <div class="item item-divider">
-                Balancete do Caixa
-              </div>
-              <ion-item class="item-padding" type="item-text-wrap">
-                <table class="tabela">
-                  <tr>
-                    <td class="destaque-celula" colspan="2" width="50%" align="center">Entrada</td>
-                    <td class="destaque-celula" colspan="2" width="50%" align="center">Saída</td>
-                  </tr>
-                  <tr ng-repeat="item in vm.balancete[0]">
-                    <td ng-class="{'destaque-celula':$last}" width="30%" align="left">{{ item.TIPO1 | limitTo:10 }}</td>
-                    <td ng-class="{'destaque-celula':$last}" width="20%" align="right">{{ item.VALOR1 }}</td>
-                    <td ng-class="{'destaque-celula':$last}" width="30%" align="left">{{ item.TIPO2 | limitTo:10 }}</td>
-                    <td ng-class="{'destaque-celula':$last}" width="20%" align="right">{{ item.VALOR2 }}</td>
-                  </tr>
-                </table>
-              </ion-item>
-            </ion-list>
-          </div>
-          <div class="card mb" ng-hide="!vm.cancelamentos[0].length">
-            <ion-list>
-              <div class="item item-divider">
-                Relatório de Cancelamentos
-              </div>
-              <ion-item class="item-padding" type="item-text-wrap">
-                <table class="tabela">
-                  <tr>
-                    <td class="destaque-celula" width="50%" colspan="2" align="center">Cancelamentos do Turno</td>
-                  </tr>
-                  <tr ng-repeat="item in vm.cancelamentos[0]">
-                    <td width="50%" align="left">
-                      <strong>Cancelamento</strong> <br>
-                      <strong>Lançamento</strong> <br>
-                      <strong>Origem</strong> <br>
-                      <strong>Produto</strong> <br>
-                      <strong>Motivo</strong> <br>
-                      <strong>Qtde</strong> <br>
-                      <strong>Valor</strong>
-                    </td>
-                    <td width="50%" align="right">
-                      {{ item.CANCELAMENTO }} <br>
-                      {{ item.LANCAMENTO }} <br>
-                      {{ item.ORIGEM }} <br>
-                      {{ item.PRODUTO }} <br>
-                      {{ item.MOTIVO }} <br>
-                      {{ item.QTDE }} <br>
-                      {{ item.VALOR }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="50%" class="destaque-celula" align="left">
-                      <strong>Total</strong>
-                    </td>
-                    <td width="50%" class="destaque-celula" align="right">
-                      {{ vm.totalCancelamentos }}
-                    </td>
-                  </tr>
-                </table>
-              </ion-item>
-            </ion-list>
-          </div>
-        </div>
-      </ion-scroll>
+            <ion-item class="item-padding" type="item-text-wrap">
+              <table class="tabela">
+                <tr>
+                  <td class="destaque-celula" width="50%" align="left">Tipo</td>
+                  <td class="destaque-celula" width="50%" align="right">Valor</td>
+                </tr>
+                <tr ng-repeat="item in vm.resumoVendas[0]">
+                  <td ng-class="{'destaque-celula':$last}" align="left">{{ item.TIPO }}</td>
+                  <td ng-class="{'destaque-celula':$last}" align="right">{{ item.VALOR }}</td>
+                </tr>
+              </table>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.resumoMovimento[0].length">
+            <div class="item item-divider">
+              Resumo do Movimento
+            </div>
+            <ion-item class="item-padding" type="item-text-wrap">
+              <table class="tabela">
+                <tr>
+                  <td class="destaque-celula" width="40%" align="left">Tipo</td>
+                  <td class="destaque-celula" width="30%" align="right">Entrada</td>
+                  <td class="destaque-celula" width="30%" align="right">Saída</td>
+                </tr>
+                <tr ng-repeat="item in vm.resumoMovimento[0]">
+                  <td ng-class="{'destaque-celula':$last}" align="left">{{ item.TIPO }}</td>
+                  <td ng-class="{'destaque-celula':$last}" align="right">{{ item.ENTRADA }}</td>
+                  <td ng-class="{'destaque-celula':$last}" align="right">{{ item.SAIDA }}</td>
+                </tr>
+              </table>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.balancete[0].length">
+            <div class="item item-divider">
+              Balancete do Caixa
+            </div>
+            <ion-item class="item-padding" type="item-text-wrap">
+              <table class="tabela">
+                <tr>
+                  <td class="destaque-celula" colspan="2" width="50%" align="center">Entrada</td>
+                  <td class="destaque-celula" colspan="2" width="50%" align="center">Saída</td>
+                </tr>
+                <tr ng-repeat="item in vm.balancete[0]">
+                  <td ng-class="{'destaque-celula':$last}" width="30%" align="left">{{ item.TIPO1 | limitTo:10 }}</td>
+                  <td ng-class="{'destaque-celula':$last}" width="20%" align="right">{{ item.VALOR1 }}</td>
+                  <td ng-class="{'destaque-celula':$last}" width="30%" align="left">{{ item.TIPO2 | limitTo:10 }}</td>
+                  <td ng-class="{'destaque-celula':$last}" width="20%" align="right">{{ item.VALOR2 }}</td>
+                </tr>
+              </table>
+            </ion-item>
+          </ion-list>
+          <ion-list ng-hide="!vm.cancelamentos[0].length">
+            <div class="item item-divider">
+              Relatório de Cancelamentos
+            </div>
+            <ion-item class="item-padding" type="item-text-wrap">
+              <table class="tabela">
+                <tr>
+                  <td class="destaque-celula" width="50%" colspan="2" align="center">Cancelamentos do Turno</td>
+                </tr>
+                <tr ng-repeat="item in vm.cancelamentos[0]">
+                  <td width="50%" align="left">
+                    <strong>Cancelamento</strong> <br>
+                    <strong>Lançamento</strong> <br>
+                    <strong>Origem</strong> <br>
+                    <strong>Produto</strong> <br>
+                    <strong>Motivo</strong> <br>
+                    <strong>Qtde</strong> <br>
+                    <strong>Valor</strong>
+                  </td>
+                  <td width="50%" align="right">
+                    {{ item.CANCELAMENTO }} <br>
+                    {{ item.LANCAMENTO }} <br>
+                    {{ item.ORIGEM }} <br>
+                    {{ item.PRODUTO }} <br>
+                    {{ item.MOTIVO }} <br>
+                    {{ item.QTDE }} <br>
+                    {{ item.VALOR }}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="50%" class="destaque-celula" align="left">
+                    <strong>Total</strong>
+                  </td>
+                  <td width="50%" class="destaque-celula" align="right">
+                    {{ vm.totalCancelamentos }}
+                  </td>
+                </tr>
+              </table>
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider tabs-left">

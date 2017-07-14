@@ -1,37 +1,38 @@
 <div ng-controller="VendasCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div class="card mb">
-          <ion-list>
-            <ion-item>
-              {{ vm.dataInicial | date: "dd/MM/yy" }} {{ vm.dataInicial | date: "HH:mm" }} à
-              {{ vm.dataFinal | date: "dd/MM/yy"}} {{ vm.dataFinal | date: "HH:mm"}}
-            </ion-item>
-          </ion-list>
-        </div>
-        <div class="card mb">
-          <ion-list>
-            <ion-item class="item item-divider">
-              Tipo de Relatório
-            </ion-item>
-            <label class="item item-input item-select" style="width: 100%;">
-              <div class="input-label">
-                &nbsp;
-              </div>
-              <select ng-options="item.id as item.descricao for item in vm.tipos" ng-model="vm.tipo"
-                      ng-change="vm.GetVenda()">
-              </select>
-            </label>
-          </ion-list>
-        </div>
-        <div class="card mt" ng-show="!vm.dados[0].length && !vm.rodape[0].length">
+      <div class="card mb">
+        <ion-list>
+          <ion-item>
+            {{ vm.dataInicial | date: "dd/MM/yy" }} {{ vm.dataInicial | date: "HH:mm" }} à
+            {{ vm.dataFinal | date: "dd/MM/yy"}} {{ vm.dataFinal | date: "HH:mm"}}
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class="card mb">
+        <ion-list>
+          <ion-item class="item item-divider">
+            Tipo de Relatório
+          </ion-item>
+          <label class="item item-input item-select" style="width: 100%;">
+            <div class="input-label">
+              &nbsp;
+            </div>
+            <select ng-options="item.id as item.descricao for item in vm.tipos" ng-model="vm.tipo"
+                    ng-change="vm.GetVenda()"></select>
+          </label>
+        </ion-list>
+      </div>
+      <div class="card mt" ng-show="!vm.dados[0].length && !vm.rodape[0].length">
+        <ion-list>
           <ion-item class="item assertive">
             Não foi encontrado resultado
           </ion-item>
-        </div>
-        <div class="card" ng-hide="!vm.dados[0].length">
-          <ion-list>
+        </ion-list>
+      </div>
+      <div class="card">
+        <ion-scroll direction="y">
+          <ion-list ng-hide="!vm.dados[0].length">
             <div ng-show="vm.tipo == 3">
               <div ng-include="'templates/relatorios/venda-por-grupo-produto.html'"></div>
             </div>
@@ -42,9 +43,7 @@
               <div ng-include="'templates/relatorios/venda-grafico-anual.html'"></div>
             </div>
           </ion-list>
-        </div>
-        <div class="card mt" ng-hide="!vm.detalhes[0].length">
-          <ion-list>
+          <ion-list ng-hide="!vm.detalhes[0].length">
             <ion-item class="item item-divider">
               Total por Comanda
             </ion-item>
@@ -69,9 +68,7 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-        <div class="card mt" ng-hide="!vm.rodape[0].length">
-          <ion-list>
+          <ion-list ng-hide="!vm.rodape[0].length">
             <ion-item class="item item-divider">
               Fechamento
             </ion-item>
@@ -91,8 +88,8 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-      </ion-scroll>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider">

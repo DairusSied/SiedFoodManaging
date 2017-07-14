@@ -1,11 +1,18 @@
 <div ng-controller="CouvertCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div class="card">
-          <ion-list ng-hide="vm.fechados[0].length">
-            <ion-item class="assertive">Não existe couvert fechado</ion-item>
-          </ion-list>
+      <div class="card">
+        <ion-list ng-hide="vm.fechados[0].length">
+          <ion-item class="assertive">Não existe couvert fechado</ion-item>
+        </ion-list>
+      </div>
+      <div class="card mt">
+        <ion-list ng-hide="vm.consumos[0].length">
+          <ion-item class="assertive">Nâo existe couvert em consumação</ion-item>
+        </ion-list>
+      </div>
+      <div class="card mt" ng-if="(vm.fechados[0].length || vm.consumos[0].length)">
+        <ion-scroll direction="y">
           <ion-list ng-show="vm.fechados[0].length">
             <div class="item item-divider">
               Counvert Fechados
@@ -28,11 +35,6 @@
                 </tr>
               </table>
             </ion-item>
-          </ion-list>
-        </div>
-        <div class="card mt">
-          <ion-list ng-hide="vm.consumos[0].length">
-            <ion-item class="assertive">Nâo existe couvert em consumação</ion-item>
           </ion-list>
           <ion-list ng-show="vm.consumos[0].length">
             <div class="item item-divider">
@@ -57,8 +59,6 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-        <div class="card mt" ng-show="vm.consumos[0].length">
           <ion-list>
             <div class="item item-divider">
               Total Geral
@@ -78,8 +78,8 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-      </ion-scroll>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider">

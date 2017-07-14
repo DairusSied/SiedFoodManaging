@@ -1,15 +1,14 @@
 <div ng-controller="CancelamentosCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div ng-hide="vm.mesas[0].length > 0 || vm.cartoes[0].length > 0">
-          <ion-list>
-            <ion-item class="item assertive">Não existe item para cancelamento</ion-item>
-          </ion-list>
-        </div>
-        <div ng-show="vm.relatorio">
-          <div class="card" ng-show="vm.mesas[0].length > 0">
-            <ion-list>
+      <div class="card">
+        <ion-list ng-hide="vm.mesas[0].length > 0 || vm.cartoes[0].length > 0">
+          <ion-item class="item assertive">Não existe item para cancelamento</ion-item>
+        </ion-list>
+        <ion-scroll direction="y">
+          <!-- Exibir -->
+          <div ng-show="vm.relatorio">
+            <ion-list ng-show="vm.mesas[0].length > 0">
               <ion-item class="item item-divider item-tabela">
                 <div class="row">
                   <div class="col">
@@ -27,8 +26,7 @@
                 </div>
               </ion-item>
               <ion-item class="item-tabela" ng-repeat="item in vm.mesas[0] | filter: search"
-                        ng-click="vm.RetornaItemsDaComanda(item.Comanda, 1)"
-                        style="font-size: 14px; padding: 1px 0px;">
+                        ng-click="vm.RetornaItemsDaComanda(item.Comanda, 1)" style="font-size: 14px; padding: 1px 0px;">
                 <div class="row">
                   <div class="col">
                     {{ item.Comanda }}
@@ -45,9 +43,7 @@
                 </div>
               </ion-item>
             </ion-list>
-          </div>
-          <div class="card mt" ng-show="vm.cartoes[0].length > 0">
-            <ion-list>
+            <ion-list ng-show="vm.cartoes[0].length > 0">
               <ion-item class="item item-divider item-tabela">
                 <div class="row">
                   <div class="col">
@@ -84,10 +80,9 @@
               </ion-item>
             </ion-list>
           </div>
-        </div>
-        <div ng-hide="vm.relatorio">
-          <div class="card" ng-show="vm.comandas[0].length > 0">
-            <ion-list>
+          <!-- Ocultar -->
+          <div ng-hide="vm.relatorio">
+            <ion-list ng-show="vm.comandas[0].length > 0">
               <ion-item class="item item-divider item-tabela">
                 <div class="row">
                   <div class="col" style="text-align: left">
@@ -125,8 +120,8 @@
               </ion-item>
             </ion-list>
           </div>
-        </div>
-      </ion-scroll>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider tabs-left">

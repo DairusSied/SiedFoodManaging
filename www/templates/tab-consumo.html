@@ -1,14 +1,12 @@
 <div ng-controller="ConsumoCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
+      <div class="card" ng-show="!vm.caixa[0].length && !vm.dados[0].length && !vm.rodape[0].length">
+        <ion-list>
+          <ion-item class="item assertive">Nenhum registro encontrado</ion-item>
+        </ion-list>
+      </div>
       <ion-scroll direction="y">
-        <div ng-show="!vm.caixa[0].length && !vm.dados[0].length && !vm.rodape[0].length">
-          <div class="card">
-            <ion-list>
-              <ion-item class="item assertive">Nenhum registro encontrado</ion-item>
-            </ion-list>
-          </div>
-        </div>
         <div class="row" style="padding: 0px; margin-top: 0px;">
           <div class="col col-50" ng-hide="!vm.caixa[0].length">
             <div class="card">

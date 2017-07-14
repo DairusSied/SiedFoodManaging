@@ -1,13 +1,13 @@
 <div ng-controller="EstoqueCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div class="card">
-          <ion-list ng-show="!vm.dados[0].length">
-            <ion-item class="item assertive">
-              Nenhum registro encontrado
-            </ion-item>
-          </ion-list>
+      <div class="card">
+        <ion-list ng-show="!vm.dados[0].length">
+          <ion-item class="item assertive">
+            Nenhum registro encontrado
+          </ion-item>
+        </ion-list>
+        <ion-scroll direction="y">
           <ion-list ng-hide="!vm.dados[0].length">
             <div class="item item-divider">
               <i class="icon ion-ios-briefcase"></i>
@@ -26,8 +26,8 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-      </ion-scroll>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider">

@@ -1,9 +1,9 @@
 <div ng-controller="ComprasCtrl as vm">
   <ion-content class="has-footer">
     <ion-pane class="padding" overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
-      <ion-scroll direction="y">
-        <div class="card mb" ng-hide="vm.relatorio">
-          <ion-list>
+      <div class="card">
+        <ion-scroll direction="y">
+          <ion-list ng-hide="vm.relatorio">
             <ion-item class="item item-divider">
               {{ vm.cabecalho[0][0].Produto }}
             </ion-item>
@@ -56,48 +56,43 @@
               </table>
             </ion-item>
           </ion-list>
-        </div>
-        <div ng-show="vm.relatorio" class="card">
-          <div class="card">
-            <ion-list>
-              <ion-item class="item item-divider">
-                <!-- Detalhes dos Produtos -->
-                <div class="row without-margin without-padding" style="padding-left: 0px; margin-left: 0px;">
-                  <div class="col" style="padding-left: 0px; margin-left: 0px;">
-                    <strong>Est. Atual</strong>
-                  </div>
-                  <div class="col">
-                    <strong>Pr. Compra</strong>
-                  </div>
-                  <div class="col">
-                    <strong>Pr. Venda</strong>
-                  </div>
+          <ion-list ng-show="vm.relatorio">
+            <ion-item class="item item-divider">
+              <div class="row without-margin without-padding" style="padding-left: 0px; margin-left: 0px;">
+                <div class="col" style="padding-left: 0px; margin-left: 0px;">
+                  <strong>Est. Atual</strong>
                 </div>
-              </ion-item>
-              <label class="item item-input label-pesqusa">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input class="input-pesquisa" type="search" ng-model="vm.pesquisa.Produto"
-                       placeholder="Filtrar Produtos">
-              </label>
-              <ion-item class="item-content" ng-repeat="item in vm.dados[0] | filter: vm.pesquisa"
-                        ng-click="vm.RetornarDetalhesDoItem(item)" style="font-size: 12px !important">
-                {{ item.Produto }}
-                <div class="row without-margin without-padding" style="padding-left: 0px; margin-left: 0px;">
-                  <div class="col" style="padding-left: 0px; margin-left: 0px;">
-                    {{ item.Estoque }}
-                  </div>
-                  <div class="col">
-                    {{ item.Compra }}
-                  </div>
-                  <div class="col">
-                    {{ item.Venda }}
-                  </div>
+                <div class="col">
+                  <strong>Pr. Compra</strong>
                 </div>
-              </ion-item>
-            </ion-list>
-          </div>
-        </div>
-      </ion-scroll>
+                <div class="col">
+                  <strong>Pr. Venda</strong>
+                </div>
+              </div>
+            </ion-item>
+            <label class="item item-input label-pesqusa">
+              <i class="icon ion-ios-search placeholder-icon"></i>
+              <input class="input-pesquisa" type="search" ng-model="vm.pesquisa.Produto"
+                     placeholder="Filtrar Produtos">
+            </label>
+            <ion-item class="item-content" ng-repeat="item in vm.dados[0] | filter: vm.pesquisa"
+                      ng-click="vm.RetornarDetalhesDoItem(item)" style="font-size: 12px !important">
+              {{ item.Produto }}
+              <div class="row without-margin without-padding" style="padding-left: 0px; margin-left: 0px;">
+                <div class="col" style="padding-left: 0px; margin-left: 0px;">
+                  {{ item.Estoque }}
+                </div>
+                <div class="col">
+                  {{ item.Compra }}
+                </div>
+                <div class="col">
+                  {{ item.Venda }}
+                </div>
+              </div>
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
+      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
       <div class="tabs tabs-icon-top tab-divider tabs-left">
