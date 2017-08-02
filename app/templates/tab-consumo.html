@@ -29,8 +29,7 @@
                 </ion-item>
                 <ion-item class="consumo_item" ng-repeat="item in vm.consumo[0]" ng-class="{'item-divider' : $last }">
                   <p class="titulo">{{ item.TIPO }}</p>
-                  <p class="consumo_valor" ng-class="{'consumo_total' : $last }" style="color: white">{{
-                    item.VALOR}}</p>
+                  <p class="consumo_valor" ng-class="{'consumo_total' : $last }">{{ item.VALOR}}</p>
                 </ion-item>
               </ion-list>
             </div>

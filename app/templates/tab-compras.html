@@ -72,7 +72,7 @@
             </ion-item>
             <label class="item item-input label-pesqusa">
               <i class="icon ion-ios-search placeholder-icon"></i>
-              <input class="input-pesquisa" type="search" ng-model="vm.pesquisa.Produto"
+              <input class="input-pesquisa" type="text" ng-model="vm.pesquisa.Produto"
                      placeholder="Filtrar Produtos">
             </label>
             <ion-item class="item-content" ng-repeat="item in vm.dados[0] | filter: vm.pesquisa"

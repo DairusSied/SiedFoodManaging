@@ -65,6 +65,6 @@
                 .then(GetVendaEmConsumo())
             ;
             $ionicScrollDelegate.scrollTop();
-        }        
+        }
     }
 })();

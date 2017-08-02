@@ -7,21 +7,19 @@
 
   function runApp($ionicPlatform, $ionicPickerI18n) {
     $ionicPlatform.ready(function () {
-      // if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      //   cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      //   cordova.plugins.Keyboard.disableScroll(true);
-      // }
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+        cordova.plugins.Keyboard.disableScroll(false);
+      }
+
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
-      cordova.plugins.Keyboard.disableScroll(true);
 
-      window.addEventListener('native.keyboardhide', keyboardHideHandler);
-
-      function keyboardHideHandler(e){
-        alert('Goodnight, sweet prince');
-      }
+      // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+      // cordova.plugins.Keyboard.disableScroll(true);
+      //
+      // StatusBar.styleDefault();
 
       $ionicPickerI18n.weekdays = ["DO", "SE", "TE", "QA", "QI", "SE", "SA"];
       $ionicPickerI18n.months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];

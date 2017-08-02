@@ -76,7 +76,7 @@
       $ionicLoading.show();
 
       return getLink(parametro).then(function (link) {
-        return $http.get(link, {$timeout: 1000}).then(
+        return $http.get(link, {timeout: 30000}).then(
           function (response) {
             RemoverLoading();
 

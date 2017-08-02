@@ -10,7 +10,7 @@
         "spec": "2.2.1",
         "type": "version"
       },
-      "C:\\Sied\\mobile\\managing_v1\\node_modules"
+      "C:\\Sied\\mobile\\managing_v2\\node_modules"
     ]
   ],
   "_from": "cordova-plugin-statusbar@2.2.1",
@@ -45,7 +45,7 @@
   "_shasum": "b51c0e1aab2ba66edb77ce52bf2b93fc806c8c70",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-statusbar@2.2.1",
-  "_where": "C:\\Sied\\mobile\\managing_v1\\node_modules",
+  "_where": "C:\\Sied\\mobile\\managing_v2\\node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },

@@ -4,9 +4,9 @@
   angular.module('sied.controllers')
     .controller('ComprasCtrl', ComprasCtrl);
 
-  ComprasCtrl.$inject = ['$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory'];
+  ComprasCtrl.$inject = ['$log', '$q', '$timeout', '$scope', '$ionicLoading', '$ionicScrollDelegate', 'ClientAPIFactory'];
 
-  function ComprasCtrl($q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory) {
+  function ComprasCtrl($log, $q, $timeout, $scope, $ionicLoading, $ionicScrollDelegate, ClientAPIFactory) {
     var vm = this;
 
     vm.titulo = 'Compras';
@@ -35,6 +35,8 @@
           $ionicLoading.show({template: 'Carregando Produtos pelo preço de compra'});
 
           vm.dados = d;
+
+          $log.info(vm.dados);
 
           vm.relatorio = true;
 

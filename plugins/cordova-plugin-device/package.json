@@ -10,7 +10,7 @@
         "spec": "1.1.4",
         "type": "version"
       },
-      "C:\\Sied\\mobile\\managing_v1\\node_modules"
+      "C:\\Sied\\mobile\\managing_v2\\node_modules"
     ]
   ],
   "_from": "cordova-plugin-device@1.1.4",
@@ -45,7 +45,7 @@
   "_shasum": "d5fe74712069d03f6d386ef0bd321b3abd0d38dc",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-device@1.1.4",
-  "_where": "C:\\Sied\\mobile\\managing_v1\\node_modules",
+  "_where": "C:\\Sied\\mobile\\managing_v2\\node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },

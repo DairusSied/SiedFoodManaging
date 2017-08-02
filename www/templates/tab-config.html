@@ -2,23 +2,24 @@
   <ion-content class="has-footer">
     <ion-pane overflow-scroll="true" style="overflow-y: visible; padding-bottom: 60px;">
       <div class="padding">
+        <div ng-hide="vm.servidores.length > 0">
+          <ion-list>
+            <ion-item class="item assertive">
+              Não existe servidor cadastrado
+            </ion-item>
+          </ion-list>
+        </div>
+        <div class="card mb" ng-show='vm.mensagem.length > 0'>
+          <ion-list>
+            <ion-item class="item assertive">
+              {{ vm.mensagem[0] }}
+            </ion-item>
+          </ion-list>
+        </div>
         <div class="card">
           <ion-scroll direction="y">
-            <div ng-hide="vm.servidores.length > 0">
-              <ion-list>
-                <ion-item class="item assertive">
-                  Não existe servidor cadastrado
-                </ion-item>
-              </ion-list>
-            </div>
             <div ng-show="vm.servidores.length > 0" style="margin-bottom: 0px; padding-bottom: 0px;">
-              <div class="card mb" ng-show='vm.mensagem.length > 0'>
-                <ion-list>
-                  <ion-item class="item assertive">
-                    {{ vm.mensagem[0] }}
-                  </ion-item>
-                </ion-list>
-              </div>
+
               <div class="card">
                 <ion-list>
                   <ion-item class="item item-divider">
@@ -34,21 +35,20 @@
           </ion-scroll>
         </div>
       </div>
-      <div class="row" style="margin-top: 0px; padding-top: 0px;" ng-show="vm.servidores.length > 0">
-        <div class="col col-50" style="margin-top: 0px; padding-top: 0px;">
-          <button class="button button-block button-balanced" ng-click="vm.selecionar()">Selecionar IP</button>
-        </div>
-        <div class="col col-50" style="margin-top: 0px; padding-top: 0px;">
-          <button class="button button-block button-assertive" ng-click="vm.PopUpConfirmarExclusao()">Excluir IP
-          </button>
-        </div>
-      </div>
     </ion-pane>
     <ion-footer-bar class="footer-bottom">
-      <div class="tabs tabs-icon-top tab-divider tabs-left">
+      <div class="tabs tabs-icon-top tab-divider">
         <a class="tab-item" ng-click="vm.novo()">
           <i class="icon ion-ios-plus-outline"></i>
           Novo
+        </a>
+        <a class="tab-item" ng-click="vm.selecionar()">
+          <i class="icon ion-ios-checkmark-outline"></i>
+          Selecionar IP
+        </a>
+        <a class="tab-item" ng-click="vm.PopUpConfirmarExclusao()">
+          <i class="icon ion-ios-close-outline"></i>
+          Excluir IP
         </a>
       </div>
     </ion-footer-bar>
